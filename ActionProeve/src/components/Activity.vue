@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {computed, onMounted, ref, type Ref} from 'vue'
 import axios from "axios";

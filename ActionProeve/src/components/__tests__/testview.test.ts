@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import TestView from 'c:/Users/nanna/Desktop/Dev/ActionProeve/ActionProeve/src/testview.vue'
+import TestView from '../../views/testview.vue'
 import AddActivityForm from 'c:/Users/nanna/Desktop/Dev/ActionProeve/ActionProeve/src/components/AddActivityForm.vue';
 import { describe, expect, it } from 'vitest'
 

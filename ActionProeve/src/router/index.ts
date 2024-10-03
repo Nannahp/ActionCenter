@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePageView from '@/views/HomePageView.vue'
+import Testview from '@/views/testview.vue'
+import path from 'path'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +10,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomePageView
+    },
+    {
+    path: '/add-activity',
+      name: 'add-activity',
+      component: Testview
     }
   ]
 })
