@@ -1,4 +1,7 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Galada&display=swap');
+
+
 :root {
   /* Logo */
  --logo-color1: #00aeff;
@@ -14,9 +17,17 @@
   --text-color: #b3b3b3;
 }
 
-/* semantic color variables for this project */
-:root {
-
+/* skygge under logo */
+.logo {
+ filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
 }
+
+/* H1 til index side. */
+.index h1 {
+ font-family: "Galada", cursive;
+ font-weight: 400;
+ font-style: normal;
+}
+
 
 
