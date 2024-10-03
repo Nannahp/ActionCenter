@@ -1,6 +1,6 @@
 <script setup>
 import BaseImage from '../BaseImage.vue'
-import logo from '../../assets/logo.jpg'
+import logo from '../../assets/logo.png'
 </script>
 
 <template>
