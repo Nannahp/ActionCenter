@@ -1,22 +1,11 @@
-
 :root {
-  /* Logo */
- --logo-color1: #00aeff;
- --logo-color2: #e83a00;
- --logo-color3: #ffcf00;
- --logo-color4: #fdfffb;
- --logo-color5: #030003;
+  --action-blue: #00aeff;
+  --action-red: #e83a00;
+  --action-yellow: #ffcf00;
+  --action-white: #fdfffb;
+  --action-black: #030003;
 
-  /* background */
-  --background-color: #1f2023;
+  --bg-color-dark: #1f2023;
 
-  /* basic text */
-  --text-color: #b3b3b3;
+  --text-color-light: #b3b3b3;
 }
-
-/* semantic color variables for this project */
-:root {
-
-}
-
-
