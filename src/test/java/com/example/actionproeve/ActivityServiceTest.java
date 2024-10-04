@@ -1,7 +1,7 @@
 package com.example.actionproeve;
 
-import com.example.actionproeve.Models.Activities;
-import com.example.actionproeve.Services.ActivitiesService;
+import com.example.actionproeve.Models.Activity;
+import com.example.actionproeve.Services.ActivityService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 public class ActivityServiceTest {
-    private ActivitiesService activityService; // Remove @Autowired
+    private ActivityService activityService; // Remove @Autowired
     private ObjectMapper objectMapper;
     private final String JSON_FILE_PATH = "src/main/resources/activities.json";
 
@@ -29,21 +29,21 @@ public class ActivityServiceTest {
         // Use Mockito to mock the ObjectMapper
         objectMapper = Mockito.mock(ObjectMapper.class);
         // Initialize ActivitiesService with the mocked ObjectMapper
-        activityService = new ActivitiesService(objectMapper);
+        activityService = new ActivityService(objectMapper);
     }
 
     // need to look up why it needs this- it relates to readValue
     @SuppressWarnings("unchecked")
     @Test
     void testSaveActivity() throws IOException {
-        Activities activity = new Activities();
+        Activity activity = new Activity();
         activity.setName("test");
         activity.setTimes(List.of(10, 20, 30));
         activity.setDescription("This is a test sample");
 
         when(activityService.readActivitiesFromFile()).thenReturn(new ArrayList<>());
 
-        List<Activities> existingActivities = activityService.readActivitiesFromFile();
+        List<Activity> existingActivities = activityService.readActivitiesFromFile();
 
         // Mock the readValue method to return existing activities
         when(objectMapper.readValue(any(File.class), any(TypeReference.class))).thenReturn(existingActivities);

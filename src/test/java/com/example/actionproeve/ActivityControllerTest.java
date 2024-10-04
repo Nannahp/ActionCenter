@@ -1,7 +1,7 @@
 package com.example.actionproeve;
 
-import com.example.actionproeve.Models.Activities;
-import com.example.actionproeve.Services.ActivitiesService;
+import com.example.actionproeve.Models.Activity;
+import com.example.actionproeve.Services.ActivityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ public class ActivityControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private ActivitiesService activitiesService;
+    private ActivityService activitiesService;
 
     private ObjectMapper objectMapper;
     private static final String JSON_FILE_PATH = "src/main/resources/activities.json";
@@ -44,7 +44,7 @@ public class ActivityControllerTest {
 
     @Test
     public void testSubmitActivity() throws JsonProcessingException, Exception {
-        Activities activity = new Activities();
+        Activity activity = new Activity();
         activity.setName("test");
         activity.setTimes(List.of(10, 20, 30));
         activity.setDescription("This is a test sample");
@@ -54,7 +54,7 @@ public class ActivityControllerTest {
                 .content(objectMapper.writeValueAsString(activity)))
                 .andExpect(status().isOk());
 
-        List<Activities> activities = readActivitiesFromJsonFile();
+        List<Activity> activities = readActivitiesFromJsonFile();
 
         boolean isActivityAdded = activities.stream()
                 .anyMatch(a -> "test".equals(a.getName())
@@ -64,9 +64,9 @@ public class ActivityControllerTest {
         assertTrue(isActivityAdded, "Activity should be added");
     }
 
-    private List<Activities> readActivitiesFromJsonFile() throws IOException {
+    private List<Activity> readActivitiesFromJsonFile() throws IOException {
         byte[] jsonData = Files.readAllBytes(Paths.get(JSON_FILE_PATH));
         return objectMapper.readValue(jsonData,
-                objectMapper.getTypeFactory().constructCollectionType(List.class, Activities.class));
+                objectMapper.getTypeFactory().constructCollectionType(List.class, Activity.class));
     }
 }

@@ -2,12 +2,16 @@ package com.example.actionproeve.Models;
 
 import java.util.List;
 
-public class Activities {
+public class Activity {
 
     private String name;
     private List<Integer> times;
     private String imageUrl;
     private String description;
+
+    public Activity() {
+
+    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -31,10 +35,6 @@ public class Activities {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Activities() {
-
     }
 
     public String getName() {

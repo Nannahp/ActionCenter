@@ -57,99 +57,154 @@ function resetForm() {
 
 <template>
   <form @submit.prevent="currentSlide === 2 ? handleSubmit() : nextSlide()">
-    <div class="form">
+  
       <h2>Add New Activity</h2>
-
-      <div v-if="currentSlide === 1">
-        <BaseInput
-          labelText="Enter title of activity:"
-          labelFor="activityName"
-          placeholder="fx: Badminton"
-          id="activityName"
-          name="activityName"
-          v-model="activityName"
-          required
-        />
-        <BaseInput
-          labelText="Enter activity description:"
-          labelFor="activityDescription"
-          placeholder="fx: Our badminton court can fit up to 4 people..."
-          id="activityDescription"
-          name="activityDescription"
-          type="textarea"
-          v-model="activityDescription"
-          required
-        />
-        <div class="button-wrapper">
-          <BaseButton 
-            text="Next"
-            type="submit" 
+      <div class="input-wrapper">
+        <div v-if="currentSlide === 1">
+          <label for="activityName" class="input-label">Enter title of activity:</label>
+          <input
+            id="activityName"
+            name="activityName"
+            v-model="activityName"
+            placeholder="fx: Badminton"
+            required
+            class="small-input"
           />
+
+          <label for="activityDescription" class="input-label">Enter activity description:</label>
+          <textarea
+            id="activityDescription"
+            name="activityDescription"
+            v-model="activityDescription"
+            placeholder="fx: Our badminton court can fit up to 4 people..."
+            required
+            class="big-input"
+          ></textarea>
+
+          <div class="button-wrapper">
+            <BaseButton 
+              text="Next"
+              type="submit" 
+            />
+          </div>
         </div>
       </div>
 
-      <div v-if="currentSlide === 2">
-        <BaseInput
-          labelText="Enter time in minutes (comma separated):"
-          labelFor="activityTimes"
-          placeholder="fx: 30, 45, 60"
-          id="activityTimes"
-          name="activityTimes"
-          v-model="activityTimes"
-          required
-        />
-        <BaseInput
-          labelText="Enter an image-url: "
-          labelFor="activityImage"
-          placeholder="fx: https://example.com/image.jpg"
-          id="activityImage"
-          name="activityImage"
-          v-model="activityImage"
-          required
-        />
-        <div class="button-wrapper">
-          <BaseButton 
-            text="Submit"
-            type="submit" 
+      <div class="input-wrapper">
+        <div v-if="currentSlide === 2">
+          <label for="activityTimes" class="input-label">Enter time in minutes (comma separated):</label>
+          <input
+            id="activityTimes"
+            name="activityTimes"
+            v-model="activityTimes"
+            placeholder="fx: 30, 45, 60"
+            required
+            class="small-input"
           />
+
+          <label for="activityImage" class="input-label">Enter an image-url:</label>
+          <input
+            id="activityImage"
+            name="activityImage"
+            v-model="activityImage"
+            placeholder="fx: https://example.com/image.jpg"
+            required
+            class="small-input"
+          />
+
+          <div class="button-wrapper">
+            <BaseButton 
+              text="Submit"
+              type="submit" 
+            />
+          </div>
         </div>
       </div>
 
-      <div v-if="currentSlide === 3">
-        <h3 v-if="submitted">Activity added!</h3>
-        <p>You can close this form now</p>
+      <div class="input-wrapper">
+        <div v-if="currentSlide === 3">
+          <h3 v-if="submitted">Activity added!</h3>
+          <p>You can close this form now</p>
 
-        <BaseButton
-          text="Close"
-          type="button"
-          @click="exitForm"
-        />
+          <BaseButton
+            text="Close"
+            type="button"
+            @click="exitForm"
+          />
+        </div>
       </div>
-    </div>
   </form>
 </template>
 
 <style scoped>
-.form {
-  border: solid black;
-  border-radius: 1rem;
-  width: 80%;
-  max-width: 600px; 
+/* Center the form on the page */
+form {
+  width: 40em;
+  margin: 0 auto;
   padding: 2rem;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Styling for headers */
+h2 {
+  color: black;
   text-align: center;
 }
 
-.button-wrapper {
-  padding: 4%;
+/* Wrapper for form inputs */
+.input-wrapper {
+  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
-.button {
-  width: 5em;
-  margin: auto;
-  padding: 2%;
-  font-size: 1em;
+/* Align labels to the left of the input */
+.input-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
 }
-.input {
-  width: 50%;
+
+/* Styling for inputs */
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Ensure textarea has more height and wraps text */
+textarea {
+  height: 8rem;
+  resize: vertical;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* Button wrapper styling */
+.button-wrapper {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Button styling */
+button {
+  padding: 0.75rem 1.5rem;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>
