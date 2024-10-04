@@ -7,7 +7,7 @@ defineProps<{}>()
 
 // Vi har ikke brug for gender i denne component men det var for at teste
 // baseInput med type option hehe
-
+const password = ref(''); //tilføjet denne. Sorry
 const username = ref('')
 const gender = ref('')
 
