@@ -1,21 +1,41 @@
 <script setup lang="ts">
 import Activity from '../components/Activity.vue'
-import LogoIcon from '../components/icons/LogoIcon.vue'
-import LoginForm from '../components/LoginForm.vue'
 import AdventureHeader from "@/components/AdventureHeader.vue";
+import {onMounted, ref} from "vue";
+import axios from "axios";
+
+// Definer en type for Activity
+interface Activity {
+  activityName: string;
+  durations: string[];
+  information: string;
+  image: string;
+}
+
+const activities = ref([])
+
+//Henter data fra backend, når komponentet er monteret.
+onMounted(() => {
+  axios.get('http://localhost:8080/activities')
+      .then(response => {
+        activities.value = response.data;
+      })
+      .catch(error =>{
+        console.error('Fejl desværre: ', error)
+      });
+})
 
 </script>
 
 <template>
   <header>
     <AdventureHeader />
-    <!-- <LogoIcon /> -->
-    <!--<LoginForm />-->
+    <h1>Activities</h1>
 
-    <div class="wrapper">
-      <Activity activity-name="Go Carts!" />
-    </div>
   </header>
+  <div class="wrapper">
+    <Activity v-for="activity in activities" :key="Activity.activityName" :activity="activity" />
+  </div>
 
   <!--<RouterView /> -->
 </template>
@@ -35,18 +55,10 @@ nav {
   margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
- /* color: var(--color-text);*/
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
 
 nav a {
   display: inline-block;
   padding: 0 1rem;
-  /*border-left: 1px solid var(--color-border);*/
 }
 
 nav a:first-of-type {
@@ -58,7 +70,6 @@ nav a:first-of-type {
     display: flex;
     place-items: center;
     width: 100%;
-    /*padding-right: calc(var(--section-gap) / 2);*/
   }
 
 
