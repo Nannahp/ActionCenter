@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePageView from '@/views/HomePageView.vue'
-import Testview from '@/views/testview.vue'
+import Testview from '@/views/test-view.vue'
 import path from 'path'
 
 const router = createRouter({

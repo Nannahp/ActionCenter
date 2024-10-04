@@ -6,6 +6,16 @@ public class Activities {
 
     private String name;
     private List<Integer> times;
+    private String imageUrl;
+    private String description;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public List<Integer> getTimes() {
         return times;
@@ -14,8 +24,6 @@ public class Activities {
     public void setTimes(List<Integer> times) {
         this.times = times;
     }
-
-    private String description;
 
     public String getDescription() {
         return description;

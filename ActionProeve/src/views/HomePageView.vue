@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import Activity from '../components/Activity.vue'
 import LogoIcon from '../components/icons/LogoIcon.vue'
-<<<<<<< HEAD
-//import LoginForm from '../components/Loginform.vue'
-=======
 import LoginForm from '../components/LoginForm.vue'
 import AdventureHeader from "@/components/AdventureHeader.vue";
 
->>>>>>> origin/master
 </script>
 
 <template>
