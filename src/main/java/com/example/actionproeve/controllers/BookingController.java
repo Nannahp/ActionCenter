@@ -21,10 +21,10 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping
+    /*@GetMapping
     public List<Booking> getAllBookings() {
         return BookingService.getAllBookings();
-    }
+    }*/
 
     @PostMapping
     public Booking createBooking(@RequestBody Booking booking) {
