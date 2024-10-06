@@ -102,6 +102,7 @@ function filteredBookings(activity: string) {
           />
         </div>
       </div>
+      <BaseButton text="Create Booking" type="button" class="create-booking-btn" @click="closeDayView" />
     </div>
   </transition>
 </template>
@@ -112,6 +113,7 @@ function filteredBookings(activity: string) {
   padding: 20px;
   background: #f0f0f0;
   border-left: 1px solid #ccc;
+  border-radius: 10px;
   position: absolute;
   right: 0;
   top: 0;
@@ -129,6 +131,17 @@ function filteredBookings(activity: string) {
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.create-booking-btn {
+  background: none;
+  border: 1px solid #b3b3b3;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .centered-date {

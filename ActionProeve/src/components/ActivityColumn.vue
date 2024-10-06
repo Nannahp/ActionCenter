@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import type {Booking} from "@/models/Booking";
+import BookingDetails from '@/components/BookingDetails.vue';
+import {ref} from "vue";
 
 const props = defineProps<{
   activityName: string;
   bookings: Booking[];
   activityColor: string;
 }>();
+
+const selectedBooking = ref<Booking | null>(null);
+const isModalVisible = ref(false);
 
 function isWeekend(date: Date): boolean {
   const dayOfWeek = date.getDay();
@@ -45,6 +50,15 @@ function formatTime(date: string, time: string) {
   const dateTimeString = `${date}T${time}`;
   return new Date(dateTimeString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
+
+function openBookingDetails(booking: Booking) {
+  selectedBooking.value = booking;
+  isModalVisible.value = true;
+}
+
+function closeModal() {
+  isModalVisible.value = false;
+}
 </script>
 
 <template>
@@ -55,6 +69,7 @@ function formatTime(date: string, time: string) {
           :key="booking.id"
           :style="getEventStyle(booking)"
           class="event-block"
+          @click="openBookingDetails(booking)"
       >
         {{ formatTime(booking.date, booking.startTime) }} -
         {{ formatTime(booking.date, booking.endTime) }}
@@ -62,6 +77,12 @@ function formatTime(date: string, time: string) {
         {{ booking.customerName }}
       </div>
     </div>
+
+    <BookingDetails
+        :isVisible="isModalVisible"
+        :booking="selectedBooking"
+        @close="closeModal"
+    />
   </div>
 </template>
 
