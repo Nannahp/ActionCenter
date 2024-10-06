@@ -5,14 +5,14 @@ import ActivityColumn from "@/components/ActivityColumn.vue";
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-const startHour = 10; // Adjust based on business hours
+const startHour = 10;
 const endHour = 20;
 
 const weekendStartHour = 12;
 const weekendEndHour = 20;
 
-const bookings = ref([]);
-const uniqueActivities = ref([]);
+const bookings = ref<any[]>([]);
+const uniqueActivities = ref<string[]>([]);
 
 const props = defineProps<{
   day: Date | null;
@@ -21,31 +21,29 @@ const props = defineProps<{
 
 const emit = defineEmits(['close-day-view']);
 
-const activityColors = {
+const activityColors: Record<string, string> = {
   "Yoga": "rgba(255, 182, 193, 0.7)",
   "Bowling": "rgba(173, 216, 230, 0.7)",
-  "Laser Tag": "rgba(144, 238, 144, 0.7)",
+  "Laser Tag": "rgba(144, 238, 144, 0.7)"
 };
 
 function isWeekend(day: Date | null): boolean {
   if (day === null) {
-    return false;  // Return a default value or handle appropriately
+    return false;
   }
   const dayOfWeek = day.getDay();
-  return dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+  return dayOfWeek === 0 || dayOfWeek === 6; //Sunday = 0, Saturday = 6
 }
 
 onMounted(async () => {
   if (props.day !== null) {
     const dayYear = props.day.getFullYear();
-    const dayMonth = props.day.getMonth() + 1; // +1 to convert to 1-based month
+    const dayMonth = props.day.getMonth() + 1; //+1 to convert to 1-based month
     const dayDate = props.day.getDate();
 
-    // Format date to YYYY-MM-DD for API request
     const formattedDate = `${dayYear}-${String(dayMonth).padStart(2, '0')}-${String(dayDate).padStart(2, '0')}`;
 
     try {
-      // Fetch bookings from the backend
       const { data } = await axios.get(`http://localhost:8080/api/bookings/day`, {
         params: { date: formattedDate }
       });
@@ -68,7 +66,7 @@ function closeDayView() {
   emit('close-day-view');
 }
 
-function filteredBookings(activity) {
+function filteredBookings(activity: string) {
   return bookings.value.filter(booking => booking.activityName === activity);
 }
 </script>

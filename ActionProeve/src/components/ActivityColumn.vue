@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CSSProperties } from 'vue';
+import type { CSSProperties } from 'vue';
 import type {Booking} from "@/models/Booking";
 
 const props = defineProps<{
@@ -14,15 +14,19 @@ function isWeekend(date: Date): boolean {
 }
 
 function getEventStyle(booking: Booking): CSSProperties {
-  const startHour = new Date(booking.startTime).getHours();
-  const startMinutes = new Date(booking.startTime).getMinutes();
-  const endHour = new Date(booking.endTime).getHours();
-  const endMinutes = new Date(booking.endTime).getMinutes();
+  //So TS can read it
+  const startDateTime = new Date(`${booking.date}T${booking.startTime}`);
+  const endDateTime = new Date(`${booking.date}T${booking.endTime}`);
 
-  // Check if the booking date is a weekend
-  const isBookingOnWeekend = isWeekend(new Date(booking.dateStartTime));
+  const startHour = startDateTime.getHours();
+  const startMinutes = startDateTime.getMinutes();
+  const endHour = endDateTime.getHours();
+  const endMinutes = endDateTime.getMinutes();
+
+  //Check if booking date is weekend
+  const isBookingOnWeekend = isWeekend(startDateTime);
   const openingHour = isBookingOnWeekend ? 12 : 10;
-  const closingHour = 20;  // Always closing at 20
+  const closingHour = 20;
   const totalHours = closingHour - openingHour;
 
   const top = ((startHour - openingHour) * 60 + startMinutes) * 100 / (totalHours * 60);
@@ -31,14 +35,15 @@ function getEventStyle(booking: Booking): CSSProperties {
   return {
     top: `${top}%`,
     height: `${height}%`,
-    backgroundColor: props.activityColor || 'rgba(173, 216, 230, 0.7)',
+    backgroundColor: props.activityColor || 'darkgray',
     position: 'absolute',
     width: '100%',
   };
 }
 
-function formatTime(time: string) {
-  return new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+function formatTime(date: string, time: string) {
+  const dateTimeString = `${date}T${time}`;
+  return new Date(dateTimeString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 </script>
 
@@ -46,13 +51,13 @@ function formatTime(time: string) {
   <div class="activity-column">
     <div class="event-grid">
       <div
-          v-for="(booking, index) in bookings"
+          v-for="booking in bookings"
           :key="booking.id"
           :style="getEventStyle(booking)"
           class="event-block"
       >
-        {{ formatTime(booking.startTime) }} -
-        {{ formatTime(booking.endTime) }}
+        {{ formatTime(booking.date, booking.startTime) }} -
+        {{ formatTime(booking.date, booking.endTime) }}
         <br />
         {{ booking.customerName }}
       </div>
