@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bookings")
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class BookingController {
     @Autowired
     private EmployeeService employeeService;
@@ -39,6 +40,13 @@ public class BookingController {
         booking.setEmployee(employee); // Set the employee reference
         bookingService.createBooking(booking);
         return ResponseEntity.ok("Booking registered successfully");
+    }
+
+    @GetMapping("/day")
+    public ResponseEntity<List<Booking>> getBookingsByDate(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date); //Convert the incoming string to LocalDate
+        List<Booking> bookings = bookingService.getBookingsByDate(localDate);
+        return ResponseEntity.ok(bookings);
     }
 
     // save this for later .
