@@ -20,4 +20,9 @@ public class BookingService {
     public Booking createBooking(Booking booking) {
         return bookingRepository.save(booking);
     }
+
+    public void calculatePrice(Booking booking) {
+
+    }
+
 }

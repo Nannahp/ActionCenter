@@ -69,6 +69,9 @@
           v-model="booking.endTime"
           required
       />
+
+      <p>{{ submissionStatus }}</p>
+
       <BaseButton
           type="submit"
           text="Save"/>
@@ -79,6 +82,8 @@
 <script>
 import BaseInput from "@/components/BaseInput.vue";
 import BaseButton from "@/components/BaseButton.vue";
+import {onMounted} from "vue";
+import axios from "axios";
 
 export default {
   components: {BaseButton, BaseInput},
@@ -96,13 +101,36 @@ export default {
     };
   },
   methods: {
-    submitBooking() {
+    async submitBooking() {
       console.log("Booking submitted:", this.booking);
-      // You can use axios or fetch to post data to the backend
-      // axios.post('/api/bookings', this.booking).then(response => { ... })
+      try {
+        const response = await axios.post('/api/bookings', this.booking);
+        console.log("Response:", response.data);
+
+        // If the submission is successful, update status and clear the form
+        this.submissionStatus = 'Booking submitted successfully!';
+        this.resetBookingForm(); // Reset the form after successful submission
+
+      } catch (error) {
+        console.error("Error submitting booking:", error);
+        this.submissionStatus = 'Error submitting booking. Please try again.';
+      }
+    },
+    resetBookingForm() {
+      // Reset the form fields after successful submission
+      this.booking = {
+        date: '',
+        startTime: '',
+        endTime: '',
+        activityName: '',
+        customerName: '',
+        email: '',
+        employeeId: '',
+      };
     },
   },
 };
+
 </script>
 
 <style scoped>
