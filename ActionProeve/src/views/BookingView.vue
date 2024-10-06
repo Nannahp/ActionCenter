@@ -4,7 +4,7 @@
 
 <script>
 
-import FormBooking from "@/components/FormBooking.vue";
+import FormBooking from "@/components/CreateBookingForm.vue";
 export default {
   name: 'form-booking',
   components: {

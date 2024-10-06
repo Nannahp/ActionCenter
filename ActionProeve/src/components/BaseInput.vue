@@ -47,6 +47,28 @@ function handleChange(event: Event) {
       </option>
     </select>
 
+    <!-- Render a date input if type is 'date' -->
+    <input
+        v-else-if="inputType === 'date'"
+        :id="id"
+        :name="name"
+        type="date"
+        :required="required"
+        :value="modelValue"
+        @input="handleInput"
+    />
+
+    <!-- Render a time input if type is 'time' -->
+    <input
+        v-else-if="inputType === 'time'"
+        :id="id"
+        :name="name"
+        type="time"
+        :required="required"
+        :value="modelValue"
+        @input="handleInput"
+    />
+
     <!-- Render a text input for all other types -->
     <input
       v-else
