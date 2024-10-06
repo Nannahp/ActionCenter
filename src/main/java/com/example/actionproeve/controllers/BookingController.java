@@ -21,10 +21,10 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    /*@GetMapping
+    @GetMapping
     public List<Booking> getAllBookings() {
-        return BookingService.getAllBookings();
-    }*/
+        return bookingService.getAllBookings();
+    }
 
     @PostMapping
     public Booking createBooking(@RequestBody Booking booking) {
@@ -34,7 +34,7 @@ public class BookingController {
     // TESTING
     @PostMapping("/create-booking/hardcoded")
     public ResponseEntity<?> createHardcodedbooking(@RequestBody Booking booking) {
-        Optional<Employee> optionalEmployee = employeeService.findById(1L);
+        Optional<Employee> optionalEmployee = employeeService.findById(1l);
         Employee employee = optionalEmployee.orElse(null);
         booking.setEmployee(employee); // Set the employee reference
         bookingService.createBooking(booking);
