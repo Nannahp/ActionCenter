@@ -48,12 +48,8 @@ onMounted(async () => {
         params: { date: formattedDate }
       });
 
-      console.log('Fetched bookings:', data); // Log the fetched bookings
-
-      // Store the retrieved bookings in the ref
       bookings.value = data;
 
-      // Get unique activity names
       uniqueActivities.value = [...new Set(bookings.value.map(b => b.activityName))];
     } catch (error) {
       console.error('Error fetching bookings:', error);
