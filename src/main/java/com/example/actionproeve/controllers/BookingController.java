@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bookings")
-//@CrossOrigin(origins = "http://localhost:5173")
+// @CrossOrigin(origins = "http://localhost:5173")
 public class BookingController {
     @Autowired
     private EmployeeService employeeService;
@@ -44,7 +44,7 @@ public class BookingController {
 
     @GetMapping("/day")
     public ResponseEntity<List<Booking>> getBookingsByDate(@RequestParam String date) {
-        LocalDate localDate = LocalDate.parse(date); //Convert the incoming string to LocalDate
+        LocalDate localDate = LocalDate.parse(date); // Convert the incoming string to LocalDate
         List<Booking> bookings = bookingService.getBookingsByDate(localDate);
         return ResponseEntity.ok(bookings);
     }

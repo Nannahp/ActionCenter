@@ -43,12 +43,15 @@ export default defineComponent({
     <div class="logo">
       <img src="@/assets/logo.png" alt="Logo" />
     </div>
-    <BaseNavigation
+    <div class="nav-section">
+      <BaseNavigation
         :navItems="navItems"
         dropdownLabel="Activities"
         :dropdownItems="dropdownItems"
         @dropdown-select="handleDropdownSelect"
-    />
+      />
+      <div class="login-placeholder">Login</div>
+    </div>
   </header>
 </template>
 
@@ -57,20 +60,25 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   padding: 10px 20px;
-  color: var(--bg-color-dark);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  grid-column: 1 / -1;
+  width: 100vh;
+  z-index: 10000;
+  position: fixed;
 }
 
 .logo img {
-  height: 120px;
+  height: 50px;
 }
 
-nav {
+.nav-section {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
+.login-placeholder {
+  margin-left: auto;
+  cursor: pointer;
+}
 </style>

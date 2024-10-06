@@ -1,7 +1,7 @@
-package com.example.actionproeve.Controllers;
+package com.example.actionproeve.controllers;
 
-import com.example.actionproeve.Models.Activity;
-import com.example.actionproeve.Services.ActivityService;
+import com.example.actionproeve.models.Activity;
+import com.example.actionproeve.services.ActivityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,4 +50,19 @@ public class ActivityController {
         byte[] jsonData = Files.readAllBytes(Paths.get(resource.getURI()));
         return ResponseEntity.ok(new String(jsonData));
     }
+
+    /*
+     * 
+     * @GetMapping("/get-activities")
+     * public List<Activity> getAllActivities() {
+     * return activityService.getAllActivities();
+     * }
+     * 
+     * @PostMapping("/save-activities") // New endpoint to save hardcoded activities
+     * public String saveActivities() {
+     * activityService.saveHardcodedActivities();
+     * return "Hardcoded activities saved!";
+     * }
+     */
+
 }

@@ -1,7 +1,7 @@
 package com.example.actionproeve;
 
-import com.example.actionproeve.Models.Activity;
-import com.example.actionproeve.Services.ActivityService;
+import com.example.actionproeve.models.Activity;
+import com.example.actionproeve.services.ActivityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +46,7 @@ public class ActivityControllerTest {
     public void testSubmitActivity() throws JsonProcessingException, Exception {
         Activity activity = new Activity();
         activity.setName("test");
-        activity.setTimes(List.of(10, 20, 30));
+        activity.setTimes(List.of("10", "20", "30"));
         activity.setDescription("This is a test sample");
 
         mockMvc.perform(post("/add-activity")

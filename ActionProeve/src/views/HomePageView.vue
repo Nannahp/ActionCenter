@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Activity from '../components/Activity.vue'
+//import Activity from '../components/Activity.vue'
 import AdventureHeader from "@/components/AdventureHeader.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";

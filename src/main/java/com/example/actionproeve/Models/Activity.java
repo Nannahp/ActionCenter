@@ -1,16 +1,19 @@
-package com.example.actionproeve.Models;
+package com.example.actionproeve.models;
 
 import java.util.List;
 
 public class Activity {
-
     private String name;
-    private List<Integer> times;
-    private String imageUrl;
+    private List<String> times;
     private String description;
+    private String imageUrl;
 
-    public Activity() {
+    public List<String> getTimes() {
+        return times;
+    }
 
+    public void setTimes(List<String> times) {
+        this.times = times;
     }
 
     public String getImageUrl() {
@@ -21,20 +24,16 @@ public class Activity {
         this.imageUrl = imageUrl;
     }
 
-    public List<Integer> getTimes() {
-        return times;
-    }
-
-    public void setTimes(List<Integer> times) {
-        this.times = times;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Activity() {
+
     }
 
     public String getName() {

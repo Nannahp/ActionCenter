@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import DayCalender from "@/components/DayCalender.vue";
 import MonthCalender from "@/components/MonthCalender.vue";
+import CreateActivityForm from "@/components/CreateActivityForm.vue";
+import TestHeader from ".././components/TestHeader.vue";
 
 
 
@@ -29,10 +31,34 @@ function closeDayView() {
   isDayViewVisible.value = false;
   (document.querySelector('.month-view') as HTMLElement).classList.remove('blurred');
 }
+
+//Add-activities things: 
+// Reactive reference for form visibility
+const formVisible = ref(false); // Initially set to false
+
+// Handle dropdown selection
+const handleDropdownSelect = (value: string) => {
+  if (value === 'add-activity') {
+    formVisible.value = true;  
+  }
+};
+
+// Close the form
+const closeForm = () => {
+  formVisible.value = false;  
+};
+
 </script>
 
 <template>
-  <div class="calender-container">
+    <header>
+    <TestHeader @dropdown-select="handleDropdownSelect" />
+  </header>
+  <div class="Activity-form">
+     <CreateActivityForm v-if="formVisible" @exitForm="closeForm" />
+  </div>
+
+  <div class="calender-container" :class="{ 'blurred': formVisible }">
     <div :class="{ blurred: isDayViewVisible }">
       <MonthCalender @day-selected="showDayView" />
     </div>
@@ -57,7 +83,10 @@ function closeDayView() {
   position: relative;
   width: fit-content;
   margin: 0 auto;
+  margin-top: 20px;
+  position: absolute;
 }
+
 
 .blurred {
   filter: blur(5px);
@@ -71,5 +100,26 @@ function closeDayView() {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9;
+}
+
+
+.Activity-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 200;
+}
+header {
+  width: 100vh;
+  height: auto;
+}
+template {
+  display: flex;
+  flex-direction: column;
 }
 </style>

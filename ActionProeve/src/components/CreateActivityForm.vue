@@ -57,18 +57,20 @@ function resetForm() {
 
 <template>
   <form @submit.prevent="currentSlide === 2 ? handleSubmit() : nextSlide()">
-  
-      <h2>Add New Activity</h2>
+    <h2>Add New Activity</h2>
+    <div v-if="currentSlide === 1">
       <div class="input-wrapper">
-        <div v-if="currentSlide === 1">
-          <label for="activityName" class="input-label">Enter title of activity:</label>
-          <input
+        <div class="input">
+
+          <BaseInput
             id="activityName"
             name="activityName"
             v-model="activityName"
             placeholder="fx: Badminton"
             required
             class="small-input"
+            labelText="Enter title of activity:"
+            labelFor="activityName"
           />
 
           <label for="activityDescription" class="input-label">Enter activity description:</label>
@@ -80,72 +82,79 @@ function resetForm() {
             required
             class="big-input"
           ></textarea>
-
-          <div class="button-wrapper">
-            <BaseButton 
-              text="Next"
-              type="submit" 
-            />
-          </div>
+        </div>
+        <div class="button-wrapper">
+          <BaseButton text="Next" type="submit" />
         </div>
       </div>
+    </div>
 
+    <div v-if="currentSlide === 2">
       <div class="input-wrapper">
-        <div v-if="currentSlide === 2">
-          <label for="activityTimes" class="input-label">Enter time in minutes (comma separated):</label>
-          <input
+        <div class="input">
+    
+          <BaseInput
             id="activityTimes"
             name="activityTimes"
             v-model="activityTimes"
             placeholder="fx: 30, 45, 60"
             required
             class="small-input"
+            labelText="Enter time in minutes (comma separated):"
+            labelFor="activityTimes"
           />
 
-          <label for="activityImage" class="input-label">Enter an image-url:</label>
-          <input
+        
+          <BaseInput
             id="activityImage"
             name="activityImage"
             v-model="activityImage"
             placeholder="fx: https://example.com/image.jpg"
             required
             class="small-input"
+            labelText="Enter an image URL:"
+            labelFor="activityImage"
           />
-
-          <div class="button-wrapper">
-            <BaseButton 
-              text="Submit"
-              type="submit" 
-            />
-          </div>
+        </div>
+        <div class="button-wrapper">
+          <BaseButton text="Submit" type="submit" />
         </div>
       </div>
+    </div>
 
+    <div v-if="currentSlide === 3">
       <div class="input-wrapper">
-        <div v-if="currentSlide === 3">
+        <div class="success-message">
           <h3 v-if="submitted">Activity added!</h3>
           <p>You can close this form now</p>
-
-          <BaseButton
-            text="Close"
-            type="button"
-            @click="exitForm"
-          />
+        </div>
+        <div class="button-wrapper">
+        <BaseButton text="Close" type="button" @click="exitForm" />
         </div>
       </div>
+    </div>
   </form>
 </template>
-
 <style scoped>
-/* Center the form on the page */
+/* Center the form on the page and set a fixed height */
 form {
   width: 40em;
+  height: 25em;
   margin: 0 auto;
   padding: 2rem;
   text-align: left;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+
+}
+.input {
+  height: 18em;
+    align-content: center;
+    width: 95%;
+    align-self: center;
 }
 
 /* Styling for headers */
@@ -156,9 +165,14 @@ h2 {
 
 /* Wrapper for form inputs */
 .input-wrapper {
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1; /* Allows content to fill available space, keeping centered */
   width: 100%;
+  margin-bottom: 1.5rem;
 }
+
 
 /* Align labels to the left of the input */
 .input-label {
@@ -194,8 +208,8 @@ textarea {
 
 /* Button wrapper styling */
 .button-wrapper {
+  margin-top: auto; /* Pushes the button to the bottom */
   text-align: center;
-  margin-top: 1rem;
 }
 
 /* Button styling */
@@ -206,5 +220,13 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+.success-message {
+  height: 18em;
+    align-content: center;
+    width: auto;
+    align-self: center;
+    text-align: center;
+    color: green;
 }
 </style>

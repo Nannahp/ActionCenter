@@ -1,7 +1,7 @@
 package com.example.actionproeve;
 
-import com.example.actionproeve.Models.Activity;
-import com.example.actionproeve.Services.ActivityService;
+import com.example.actionproeve.models.Activity;
+import com.example.actionproeve.services.ActivityService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +38,7 @@ public class ActivityServiceTest {
     void testSaveActivity() throws IOException {
         Activity activity = new Activity();
         activity.setName("test");
-        activity.setTimes(List.of(10, 20, 30));
+        activity.setTimes(List.of("10", "20", "30"));
         activity.setDescription("This is a test sample");
 
         when(activityService.readActivitiesFromFile()).thenReturn(new ArrayList<>());
