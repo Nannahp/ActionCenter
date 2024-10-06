@@ -1,4 +1,4 @@
-package com.example.actionproeve.controllers;
+package com.example.actionproeve.Controllers;
 
 import com.example.actionproeve.models.Booking;
 import com.example.actionproeve.models.Employee;
@@ -23,7 +23,7 @@ public class BookingController {
 
     @GetMapping
     public List<Booking> getAllBookings() {
-        return bookingService.getAllBookings();
+        return BookingService.getAllBookings();
     }
 
     @PostMapping
@@ -34,7 +34,7 @@ public class BookingController {
     // TESTING
     @PostMapping("/create-booking/hardcoded")
     public ResponseEntity<?> createHardcodedbooking(@RequestBody Booking booking) {
-        Optional<Employee> optionalEmployee = employeeService.findById(1l);
+        Optional<Employee> optionalEmployee = employeeService.findById(1L);
         Employee employee = optionalEmployee.orElse(null);
         booking.setEmployee(employee); // Set the employee reference
         bookingService.createBooking(booking);
