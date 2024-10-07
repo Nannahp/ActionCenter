@@ -26,4 +26,9 @@ public class BookingService {
         return bookingRepository.findByDate(date);
     }
 
+
+    public void calculatePrice(Booking booking) {
+
+    }
+
 }
