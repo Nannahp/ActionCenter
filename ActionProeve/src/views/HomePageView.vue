@@ -1,22 +1,47 @@
 <script setup lang="ts">
-//import Activity from '../components/Activity.vue'
+import Activity from '../components/Activity.vue'
+import activitiesData from '@/assets/activities1.json'
 import AdventureHeader from "@/components/AdventureHeader.vue";
-import {onMounted, ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
 import axios from "axios";
+import '@/assets/IndexMain.css'
 
-// Definer en type for Activity
-// eslint-disable-next-line no-redeclare
-interface Activity {
+// Definerrer type for Activity
+interface ActivityType {
   activityName: string;
   durations: string[];
   information: string;
   image: string;
 }
 
-const activities = ref([])
+const activities = ref<ActivityType[]>([])
+
+onMounted(async () => {
+  activities.value = activitiesData as ActivityType[];
+
+  await nextTick();
+
+  const activityElements = document.querySelectorAll(".activity");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("slide-in");
+      } else {
+        entry.target.classList.remove("slide-in");
+      }
+    });
+  });
+
+  activityElements.forEach(activity => {
+    observer.observe(activity);
+  });
+});
+
+
 
 //Henter data fra backend, når komponentet er monteret.
-onMounted(() => {
+/*onMounted(() => {
   axios.get('http://localhost:8080/activities')
       .then(response => {
         activities.value = response.data;
@@ -26,45 +51,28 @@ onMounted(() => {
       });
 })
 
+ */
+
 </script>
 
 <template>
-  <header>
-    <AdventureHeader />
-    <h1>Activities</h1>
+  <AdventureHeader />
 
-  </header>
-  <div class="wrapper">
-    <!--<Activity v-for="activity in activities" :key="Activity.activityName" :activity="activity" />-->
+  <div id="{{activityName.toLowerCase()}}" class="activities-container">
+    <h1>💥 Activities 💥</h1>
+    <div class="activities-list">
+      <Activity class="activity"
+                v-for="(activity, index) in activities"
+                :key="index"
+                :activity="activity"
+                :isReversed="index % 2 === 1" :class="{'activity': true, 'slide-in-right': index % 2 === 1}"
+      />
+    </div>
   </div>
-
   <!--<RouterView /> -->
 </template>
 
 <style scoped>
-header {
-  width: 100%;
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-}
-
-nav a:first-of-type {
-  border: 0;
-}
 
 @media (min-width: 1024px) {
   header {
@@ -72,21 +80,29 @@ nav a:first-of-type {
     place-items: center;
     width: 100%;
   }
-
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
+
+.activities-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.activity {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.5s ease-in-out;
+}
+
+.activity.slide-in-right {
+  opacity: 1;
+  transform: translateX(100px); /* Slider fra højre */
+}
+
+.activity.slide-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
 </style>
