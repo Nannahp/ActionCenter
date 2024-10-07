@@ -5,6 +5,7 @@ import BaseButton from "@/components/BaseButton.vue";
 const props = defineProps<{
   isVisible: boolean;
   booking: Booking | null;
+  day: Date | null;
 }>()
 
 const emit = defineEmits(['close']);
@@ -16,6 +17,14 @@ function close() {
 function formatTime(date: string, time: string) {
   const dateTimeString = `${date}T${time}`;
   return new Date(dateTimeString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function isFutureOrToday(day: Date | null) {
+  if (!day) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Remove time for accurate comparison
+  return day.getTime() >= today.getTime(); // Returns true if the day is today or in the future
 }
 </script>
 
@@ -30,6 +39,13 @@ function formatTime(date: string, time: string) {
       <p><strong>Start Time:</strong> {{ formatTime(booking.date, booking.startTime) }}</p>
       <p><strong>End Time:</strong> {{ formatTime(booking.date, booking.endTime) }}</p>
       <p><strong>Email:</strong> {{ booking.email }}</p>
+      <BaseButton
+          v-if="isFutureOrToday(day)"
+          text="Delete Booking"
+          type="button"
+          class="delete-booking-btn"
+          @click="close"
+      />
     </div>
   </div>
 </template>
@@ -67,6 +83,17 @@ function formatTime(date: string, time: string) {
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.delete-booking-btn {
+  background: none;
+  border: 1px solid #b3b3b3;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 h2 {

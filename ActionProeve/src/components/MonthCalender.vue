@@ -10,12 +10,14 @@ const currentDate = ref(new Date())
 const currentMonth = ref(currentDate.value.getMonth())
 const currentYear = ref(currentDate.value.getFullYear())
 
-//For the current month name
 const currentMonthName = computed(() => {
-  return new Date(currentYear.value, currentMonth.value).toLocaleString('default', {
+  const monthName = new Date(currentYear.value, currentMonth.value).toLocaleString('en-US', {
     month: 'long'
-  })
-})
+  });
+
+  // Capitalize the first letter and ensure the rest of the letters are lowercase
+  return monthName.charAt(0).toUpperCase() + monthName.slice(1).toLowerCase();
+});
 
 const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
@@ -38,6 +40,11 @@ const daysInMonth = computed(() => {
     days.push(new Date(currentYear.value, currentMonth.value, i))
   }
 
+  //Fill rest of the calendar to ensure it always has 42 days
+  while (days.length < 42) {
+    days.push(null);
+  }
+
   return days
 })
 
@@ -48,8 +55,16 @@ const weekNumbers = computed(() => {
     daysInMonth.value[daysInMonth.value.findIndex((day) => day !== null)]
   )
 
+  // Iterate over each week and check if the week contains any valid (non-null) days
   for (let i = 0; i < Math.ceil(daysInMonth.value.length / 7); i++) {
-    weeks.push(currentWeekNumber++)
+    const weekDays = daysInMonth.value.slice(i * 7, (i + 1) * 7);
+
+    // Only push the week number if there is at least one valid day in the week
+    if (weekDays.some(day => day !== null)) {
+      weeks.push(currentWeekNumber++);
+    } else {
+      weeks.push(null); // Push null for weeks that are entirely empty
+    }
   }
 
   return weeks
@@ -99,9 +114,9 @@ function selectDay(day: Date) {
 <template>
   <div class="month-view">
     <div class="calender-header">
-      <LeftArrowIcon @click="prevMonth" />
+      <LeftArrowIcon @click="prevMonth"/>
       <h2>{{ currentMonthName }} {{ currentYear }}</h2>
-      <RightArrowIcon @click="nextMonth" />
+      <RightArrowIcon @click="nextMonth"/>
     </div>
 
     <div class="calender-day-names">
@@ -110,7 +125,9 @@ function selectDay(day: Date) {
 
     <div class="calender-grid">
       <div v-for="(weekNumber, weekIndex) in weekNumbers" :key="weekIndex" class="week-row">
-        <div class="week-number">{{ weekNumber }}</div>
+        <!-- Only show the week number if it's not null -->
+        <div v-if="weekNumber !== null" class="week-number">{{ weekNumber }}</div>
+
 
         <!-- Days in week (including empty placeholders for filler days) -->
         <div
@@ -188,6 +205,7 @@ function selectDay(day: Date) {
 
 .empty-day {
   border: none;
+  cursor: default;
 }
 
 .current-day {

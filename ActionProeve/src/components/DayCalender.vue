@@ -27,6 +27,21 @@ const activityColors: Record<string, string> = {
   "Laser Tag": "rgba(144, 238, 144, 0.7)"
 };
 
+// Function to get activity color based on the booking's activity name
+/*function getActivityColor(activityName: string): string {
+  let activityColor = 'darkgray'; // Default color
+
+  for (const activity of uniqueActivities.value) {
+    if (activity === activityName) {
+      activityColor = activity.color; // Set the color if a match is found
+      break; // Exit the loop once the activity is found
+    }
+  }
+
+  return activityColor;
+}*/
+
+
 function isWeekend(day: Date | null): boolean {
   if (day === null) {
     return false;
@@ -65,6 +80,14 @@ function closeDayView() {
 function filteredBookings(activity: string) {
   return bookings.value.filter(booking => booking.activityName === activity);
 }
+
+function isFutureOrToday(day: Date | null) {
+  if (!day) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Remove time for accurate comparison
+  return day.getTime() >= today.getTime(); // Returns true if the day is today or in the future
+}
 </script>
 
 <template>
@@ -95,10 +118,17 @@ function filteredBookings(activity: string) {
               :activityName="activity"
               :bookings="filteredBookings(activity)"
               :activityColor="activityColors[activity]"
+              :day="day"
           />
         </div>
       </div>
-      <BaseButton text="Create Booking" type="button" class="create-booking-btn" @click="closeDayView" />
+      <BaseButton
+          v-if="isFutureOrToday(day)"
+          text="Create Booking"
+          type="button"
+          class="create-booking-btn"
+          @click="closeDayView"
+      />
     </div>
   </transition>
 </template>
