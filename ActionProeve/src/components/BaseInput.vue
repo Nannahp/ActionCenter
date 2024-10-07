@@ -93,6 +93,7 @@ function handleChange(event: Event) {
 label {
   font-weight: bold;
   margin-bottom: 0.5rem;
+
 }
 
 input,
