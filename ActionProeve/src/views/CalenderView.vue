@@ -84,7 +84,7 @@ const closeForm = () => {
   width: fit-content;
   margin: 0 auto;
   margin-top: 20px;
-  position: absolute;
+
 }
 
 
@@ -111,7 +111,6 @@ const closeForm = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  position: absolute;
   z-index: 200;
 }
 header {
