@@ -1,4 +1,4 @@
-package com.example.actionproeve.Controllers;
+package com.example.actionproeve.controllers;
 
 import com.example.actionproeve.models.Booking;
 import com.example.actionproeve.models.Employee;
