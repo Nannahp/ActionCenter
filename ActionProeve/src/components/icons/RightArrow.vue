@@ -4,7 +4,7 @@ import arrow from '../../assets/right-arrow.png'
 </script>
 
 <template>
-  <div class="logo">
+  <div class="arrow">
     <BaseImage :src="arrow" />
   </div>
 </template>
