@@ -1,4 +1,4 @@
-package com.example.actionproeve.Configuration;
+package com.example.actionproeve.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
