@@ -19,6 +19,9 @@ public class ActivityService {
 
     public ActivityService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+
+
+
     }
 
     public void saveActivity(Activity activity) {
