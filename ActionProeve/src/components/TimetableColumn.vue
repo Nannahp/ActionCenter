@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{ startHour: number, endHour: number }>();
 
-const hours = [];
+const hours: number[] = [];
 for (let i = props.startHour; i <= props.endHour; i++) {
   hours.push(i);
 }
