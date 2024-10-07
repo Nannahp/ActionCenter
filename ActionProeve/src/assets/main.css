@@ -1,4 +1,20 @@
 @import './base.css';
+:root {
+  --action-blue: #00aeff;
+  --action-red: #e83a00;
+  --action-yellow: #ffcf00;
+  --action-white: #fdfffb;
+  --action-black: #030003;
+
+  --bg-color-dark: #1f2023;
+
+  --text-color-light: #d7d6d6;
+}
+
+/* skygge under logo */
+.logo {
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
+}
 
 html {
   margin: 0 auto;

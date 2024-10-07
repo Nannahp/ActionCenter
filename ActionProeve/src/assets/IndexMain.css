@@ -1,0 +1,90 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Galada&display=swap');
+
+:root {
+    --action-blue: #00aeff;
+    --action-red: #e83a00;
+    --action-yellow: #ffcf00;
+    --action-white: #fdfffb;
+    --action-black: #030003;
+
+    --bg-color-dark: #1f2023;
+
+    --text-color-light: #d7d6d6;
+}
+
+html {
+    margin: 0 auto;
+    padding: 0;
+    font-weight: normal;
+}
+
+body {
+    color: var(--text-color-light);
+    background-color: var(--bg-color-dark);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+/* skygge under logo */
+.logo {
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
+}
+
+/* H1 til index side. */
+h1 {
+    /*overflow: hidden;
+    border-right: .10em solid orange ;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: typing 3.5s steps(35, end), blink-caret .75s step-end infinite;
+
+     */
+
+    letter-spacing: .15em;
+    font-family: "Galada", cursive;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    font-size: 5rem;
+    margin: 20px 0;
+    color: var(--action-blue);
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
+
+}
+
+h2 {
+
+    overflow: hidden;
+    border-right: .15em solid orange ;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+
+    color: var(--action-red);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
+
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+
+
+p {
+    font-weight: normal;
+    font-size: 1.2rem;
+}
+
