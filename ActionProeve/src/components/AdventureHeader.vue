@@ -18,6 +18,7 @@ export default defineComponent({
       {label: 'Sumo Wrestling', value: 'sumo'}
     ];
 
+
     //Scroller til det valgte element på siden.
     const handleDropdownSelect = (value: string) => {
       const element = document.getElementById(value);
@@ -37,17 +38,17 @@ export default defineComponent({
 
 
 <template>
-  <header class="header">
+  <div class="header">
     <div class="logo">
       <img src="@/assets/logo.png" alt="Logo" />
     </div>
-    <BaseNavigation
-        :navItems="navItems"
-        dropdownLabel="Activities"
-        :dropdownItems="dropdownItems"
-        @dropdown-select="handleDropdownSelect"
+    <BaseNavigation class="menu-button"
+                    :navItems="navItems"
+                    dropdownLabel="Activities"
+                    :dropdownItems="dropdownItems"
+                    @dropdown-select="handleDropdownSelect"
     />
-  </header>
+  </div>
 </template>
 
 <style scoped>
@@ -62,13 +63,11 @@ export default defineComponent({
   grid-column: 1 / -1;
 }
 
+
 .logo img {
   height: 120px;
+  margin-left: 10%;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-}
 
 </style>

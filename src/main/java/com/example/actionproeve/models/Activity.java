@@ -3,44 +3,52 @@ package com.example.actionproeve.models;
 import java.util.List;
 
 public class Activity {
-    private String name;
-    private List<String> times;
-    private String description;
-    private String imageUrl;
 
-    public List<String> getTimes() {
-        return times;
-    }
+    private String activityName;
+    private List<String> durations;
+    private String information;
+    private String image;
 
-    public void setTimes(List<String> times) {
-        this.times = times;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Activity() {
-
     }
 
-    public String getName() {
-        return name;
+    public Activity(String activityName, List<String> durations, String information, String image) {
+        this.activityName = activityName;
+        this.durations = durations;
+        this.information = information;
+        this.image = image;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public List<String> getDurations() {
+        return durations;
+    }
+
+    public void setDurations(List<String> durations) {
+        this.durations = durations;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
