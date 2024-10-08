@@ -141,7 +141,7 @@ function resetForm() {
 /* Center the form on the page and set a fixed height */
 form {
   width: 40em;
-  height: 25em;
+  height: 27em;
   margin: 0 auto;
   padding: 2rem;
   text-align: left;
@@ -233,6 +233,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 18px;
 }
 .success-message {
   height: 18em;

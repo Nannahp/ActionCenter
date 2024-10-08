@@ -49,7 +49,6 @@ const closeForm = () => {
   formVisible.value = false;
   (document.querySelector('.month-view') as HTMLElement).classList.remove('blurred');
 };
-
 </script>
 
 <template>
@@ -92,7 +91,8 @@ const closeForm = () => {
   align-items: center;
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 75px); /* Adjust this value based on your header's height */
+  margin-top: 10px;
 }
 
 /* Form styling when visible */
@@ -116,12 +116,14 @@ const closeForm = () => {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
   z-index: 9;
 }
 
 header {
-  width: 100vh;
-  height: auto;
+  left: 0;
+  top: 0;
+  height: 75px;
 }
 
 template {

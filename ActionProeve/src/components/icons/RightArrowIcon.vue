@@ -12,6 +12,7 @@
 <style scoped>
 svg {
   cursor: pointer;
+  fill: #1f2023;
 }
 
 svg:hover {

@@ -9,8 +9,16 @@
   --highlight-color: var(--action-blue); /* To highlight elements */
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Reset margins and padding for consistency */
-html {
+html, body {
+  height: 100%; /* Ensure the body takes up the full height */
+  width: 100%; /* Ensure the body takes up the full width */
   margin: 0;
   padding: 0;
   font-weight: normal;
@@ -19,12 +27,22 @@ html {
 body {
   color: var(--text-color-dark); /* Set text color to black */
   background-color: var(--action-white); /* Set background color to white */
+  display: flex; /* Use flex to center content */
+  flex-direction: column; /* Stack children vertically */
 }
+
+#app {
+  min-height: 100vh; /* Ensure it covers the full height of the viewport */
+  width: 100%; /* Ensure it covers the full width of the viewport */
+  display: flex; /* Optional: This allows for flexible layout if needed */
+  flex-direction: column; /* Ensure children are stacked vertically */
+}
+
 
 /* Images should remain responsive */
 img {
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 /* Add drop shadow under the logo */
@@ -58,10 +76,5 @@ p {
   body {
     display: flex;
     place-items: center;
-  }
-
-  #app {
-    display: flex;
-    width: 100%;
   }
 }
