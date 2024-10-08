@@ -39,29 +39,37 @@ const formVisible = ref(false); // Initially set to false
 // Handle dropdown selection
 const handleDropdownSelect = (value: string) => {
   if (value === 'add-activity') {
-    formVisible.value = true;  
+    formVisible.value = true;
+    (document.querySelector('.month-view') as HTMLElement).classList.add('blurred');
   }
 };
 
 // Close the form
 const closeForm = () => {
-  formVisible.value = false;  
+  formVisible.value = false;
+  (document.querySelector('.month-view') as HTMLElement).classList.remove('blurred');
 };
 
 </script>
 
 <template>
-    <header>
+  <header>
     <TestHeader @dropdown-select="handleDropdownSelect" />
   </header>
-  <div class="Activity-form">
-     <CreateActivityForm v-if="formVisible" @exitForm="closeForm" />
+
+  <!-- Activity Form -->
+  <div v-if="formVisible" class="activity-form">
+    <CreateActivityForm @exitForm="closeForm" />
   </div>
 
-  <div class="calender-container" :class="{ 'blurred': formVisible }">
-    <div :class="{ blurred: isDayViewVisible }">
+  <!-- Calendar Container -->
+  <div class="calendar-container">
+    <!-- Month Calendar -->
+    <div>
       <MonthCalender @day-selected="showDayView" />
     </div>
+
+    <!-- Day Calendar -->
     <DayCalender
         v-if="isDayViewVisible"
         :day="selectedDay"
@@ -69,29 +77,38 @@ const closeForm = () => {
         :isVisible="isDayViewVisible"
         @close-day-view="closeDayView"
     />
+
+    <!-- Overlay for Day View -->
     <div v-if="isDayViewVisible" class="overlay" @click="closeDayView"></div>
+    <div v-if="formVisible" class="overlay" @click="closeForm"></div>
   </div>
 </template>
 
-
 <style scoped>
-.calender-container {
+/* Calendar container styles */
+.calendar-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   position: relative;
-  width: fit-content;
-  margin: 0 auto;
-  margin-top: 20px;
-
+  width: 100%;
+  height: 100%;
 }
 
-
-.blurred {
-  filter: blur(5px);
+/* Form styling when visible */
+.activity-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
 }
 
+/* Overlay for day view */
 .overlay {
   position: fixed;
   top: 0;
@@ -102,21 +119,11 @@ const closeForm = () => {
   z-index: 9;
 }
 
-
-.Activity-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 200;
-}
 header {
   width: 100vh;
   height: auto;
 }
+
 template {
   display: flex;
   flex-direction: column;

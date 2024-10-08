@@ -115,7 +115,7 @@ export default defineComponent({
   background-color: #e83a00;
   cursor: pointer;
   border-radius: 8px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
   text-decoration: none;
   display: inline-block;

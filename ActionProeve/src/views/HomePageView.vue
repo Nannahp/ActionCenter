@@ -73,6 +73,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+@import '@/assets/IndexMain.css';
 
 @media (min-width: 1024px) {
   header {

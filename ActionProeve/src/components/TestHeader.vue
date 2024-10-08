@@ -61,10 +61,10 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   width: 100vh;
   z-index: 10000;
   position: fixed;
+  background-color: #2b2d30;
 }
 
 .logo img {

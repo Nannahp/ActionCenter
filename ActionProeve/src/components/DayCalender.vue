@@ -160,14 +160,15 @@ function isFutureOrToday(day: Date | null) {
 }
 
 .create-booking-btn {
-  background: none;
-  border: 1px solid #b3b3b3;
-  font-size: 20px;
-  cursor: pointer;
+  font-size: 18px;
   margin: 0 auto;
   display: block;
-  border-radius: 10px;
-  padding: 10px;
+  padding: 0.75rem 1.5rem;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .centered-date {

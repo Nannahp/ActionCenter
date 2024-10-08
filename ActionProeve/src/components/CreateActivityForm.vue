@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import BaseInput from '@/components/BaseInput.vue'; 
 import BaseButton from './BaseButton.vue';
 import axios from 'axios';
@@ -57,6 +57,7 @@ function resetForm() {
 
 <template>
   <form @submit.prevent="currentSlide === 2 ? handleSubmit() : nextSlide()">
+    <BaseButton text="✖" type="button" class="close-button" @click="exitForm" />
     <h2>Add New Activity</h2>
     <div v-if="currentSlide === 1">
       <div class="input-wrapper">
@@ -136,6 +137,7 @@ function resetForm() {
   </form>
 </template>
 <style scoped>
+@import '@/assets/main.css';
 /* Center the form on the page and set a fixed height */
 form {
   width: 40em;
@@ -148,19 +150,30 @@ form {
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
-
+  position: relative; /* Add this to position the close button inside the form */
 }
 .input {
   height: 18em;
-    align-content: center;
-    width: 95%;
-    align-self: center;
+  align-content: center;
+  width: 95%;
+  align-self: center;
 }
 
 /* Styling for headers */
 h2 {
-  color: black;
   text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10; /* Optional: Ensure it appears on top of the form content */
+  color: #030003;
 }
 
 /* Wrapper for form inputs */

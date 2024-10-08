@@ -86,13 +86,13 @@ function isFutureOrToday(day: Date | null) {
 }
 
 .delete-booking-btn {
-  background: none;
+  background: #0056b3;
   border: 1px solid #b3b3b3;
   font-size: 15px;
   cursor: pointer;
   margin: 0 auto;
   display: block;
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 10px;
 }
 
