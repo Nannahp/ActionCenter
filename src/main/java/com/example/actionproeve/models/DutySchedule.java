@@ -2,11 +2,9 @@ package com.example.actionproeve.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-//Is still needed to create the table through JPA
 @Entity
 @Table(name = "duty_schedule")
 public class DutySchedule {
@@ -16,27 +14,28 @@ public class DutySchedule {
     private Long id;
 
     @Column(nullable = false)
+    private LocalDate date;
+
+    @Column(name = "start_time", nullable = false) // Maps to start_time column
     private LocalTime startTime;
 
-    @Column(nullable = false)
+    @Column(name = "end_time", nullable = false) // Maps to end_time column
     private LocalTime endTime;
-
-    @Column(nullable = false)
-    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
     @JsonIgnoreProperties({"username", "password", "admin", "bookings"})  // Exclude sensitive fields
     private Employee employee;
 
+
     public DutySchedule() {
     }
 
-    public DutySchedule(LocalTime startTime, LocalTime endTime, LocalDate date, Employee employee) {
+    public DutySchedule(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.date = date;
-        this.employee = employee;
+        this.employee = employee; // Use employeeId instead of Employee object
     }
 
     public Long getId() {
@@ -45,6 +44,14 @@ public class DutySchedule {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public LocalTime getStartTime() {
@@ -63,31 +70,8 @@ public class DutySchedule {
         this.endTime = endTime;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    //Method to retrieve the employee name
-    @Transient
+    @Transient // Use this to prevent JPA from mapping this field to a database column
     public String getEmployeeName() {
         return employee != null ? employee.getName() : null;
-    }
-
-    //Method to retrieve the employee ID
-    @Transient
-    public Long getEmployeeId() {
-        return employee != null ? employee.getId() : null;
     }
 }

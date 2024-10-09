@@ -1,8 +1,9 @@
 package com.example.actionproeve.controllers;
 
-import com.example.actionproeve.models.DutyScheduleDTO;
+import com.example.actionproeve.models.DutySchedule;
 import com.example.actionproeve.services.DutyScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +18,16 @@ public class DutyScheduleController {
     @Autowired
     DutyScheduleService dutyScheduleService;
 
-    @GetMapping
-    public List<DutyScheduleDTO> getAllDutySchedules() {
-        return dutyScheduleService.getAllDutySchedules();
+    @GetMapping("/day")
+    public ResponseEntity<List<DutySchedule>> getDutySchedulesByDate(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date); // Convert incoming string to LocalDate
+        List<DutySchedule> duties = dutyScheduleService.getDutySchedulesByDate(localDate);
+        return ResponseEntity.ok(duties);
     }
 
-    @GetMapping("/day")
-    public ResponseEntity<List<DutyScheduleDTO>> getDutySchedulesByDate(@RequestParam String date) {
-        LocalDate localDate = LocalDate.parse(date); // Convert incoming string to LocalDate
-        List<DutyScheduleDTO> duties = dutyScheduleService.getDutySchedulesByDate(localDate);
-        return ResponseEntity.ok(duties);
+    @PostMapping
+    public ResponseEntity<DutySchedule> createDutySchedule(@RequestBody DutySchedule dutySchedule) {
+        DutySchedule savedSchedule = dutyScheduleService.saveDutySchedule(dutySchedule);
+        return new ResponseEntity<>(savedSchedule, HttpStatus.CREATED);
     }
 }
