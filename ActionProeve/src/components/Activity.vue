@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import missingImage from '../../../../ActionBooking/ActionProeve/src/assets/missingpicture.png'
+import missingImage from '../assets/missingpicture.png'
 
 const props = defineProps<{
   activity: {

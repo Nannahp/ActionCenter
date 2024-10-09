@@ -8,6 +8,7 @@ const props = defineProps<{
   activityName: string;
   bookings: Booking[];
   activityColor: string;
+  day: Date | null;
 }>();
 
 const selectedBooking = ref<Booking | null>(null);
@@ -34,8 +35,8 @@ function getEventStyle(booking: Booking): CSSProperties {
   const closingHour = 20;
   const totalHours = closingHour - openingHour;
 
-  const top = ((startHour - openingHour) * 60 + startMinutes) * 100 / (totalHours * 60);
-  const height = ((endHour - startHour) * 60 + (endMinutes - startMinutes)) * 100 / (totalHours * 60);
+  const top = Math.round(((startHour - openingHour) * 60 + startMinutes) * 100 / (totalHours * 60));
+  const height = Math.round(((endHour - startHour) * 60 + (endMinutes - startMinutes)) * 100 / (totalHours * 60));
 
   return {
     top: `${top}%`,
@@ -81,6 +82,7 @@ function closeModal() {
     <BookingDetails
         :isVisible="isModalVisible"
         :booking="selectedBooking"
+        :day="props.day"
         @close="closeModal"
     />
   </div>
@@ -101,9 +103,12 @@ function closeModal() {
 .event-block {
   background-color: rgba(255, 182, 193, 0.7);
   border-radius: 5px;
-  padding: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
   color: white;
   font-size: 12px;
   font-weight: bold;
+  margin-bottom: 1px;
 }
 </style>

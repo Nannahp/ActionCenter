@@ -3,7 +3,6 @@ import HomePageView from '@/views/HomePageView.vue'
 import TestDatabaseView from '@/views/TestDatabaseView.vue'
 import CalenderView from "@/views/CalenderView.vue";
 import Testview from '@/views/test-view.vue'
-import path from 'path'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -93,9 +93,9 @@ export default defineComponent({
 
 .dropdown-menu {
   position: absolute;
-  background-color: #2b2d30;
+  background-color: #ffffff;
   list-style-type: none;
-  padding: 10px;
+  padding: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: block;
   z-index: 1;
@@ -103,10 +103,16 @@ export default defineComponent({
 
 .dropdown-menu li {
   padding: 8px 12px;
+  color: #f0f0f0;
 }
 
-.dropdown-menu li:hover {
-  background-color: #f1f1f1;
+.dropdown-menu a:hover {
+  color: #00aeff;
+}
+
+.dropdown-menu a {
+  color: #1f2023;
+  text-decoration: none;
 }
 
 .dropdown-button {
@@ -115,10 +121,10 @@ export default defineComponent({
   background-color: #e83a00;
   cursor: pointer;
   border-radius: 8px;
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 20px;
   text-decoration: none;
   display: inline-block;
   /*margin-left: -20px;*/
+  font-family: SansSerif,serif;
 }
 </style>
