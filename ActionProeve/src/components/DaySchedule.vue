@@ -22,12 +22,20 @@ const props = defineProps<{
 const emit = defineEmits(['close-day-view']);
 
 const employeeColors: Record<string, string> = {
-  "Yoga": "rgba(255, 182, 193, 0.7)",
-  "Bowling": "rgba(173, 216, 230, 0.7)",
-  "Laser Tag": "rgba(144, 238, 144, 0.7)"
+  "Princess Peach": "rgba(255, 182, 193, 0.7)",
+  "Luigi Mario": "rgba(173, 216, 230, 0.7)",
+  "Toad Toadsworth": "rgba(144, 238, 144, 0.7)",
+  "Mario Mario": "rgba(255,146,127,0.7)",
+  "Yoshi Yoshi": "rgba(103,175,153,0.7)",
+  "Bowser Koopa": "rgba(255,191,104,0.7)",
+  "Donkey Kong": "rgba(161,124,99,0.7)",
+  "Princess Daisy": "rgba(134,150,215,0.7)",
+  "Wario Wario": "rgba(255,239,121,0.7)",
+  "Waluigi Waluigi": "rgba(218,140,218,0.7)",
+
 };
 
-// Function to get activity color based on the booking's activity name
+//Function to get activity color based on the booking's activity name
 /*function getActivityColor(activityName: string): string {
   let activityColor = 'darkgray'; // Default color
 
@@ -58,7 +66,7 @@ onMounted(async () => {
     const formattedDate = `${dayYear}-${String(dayMonth).padStart(2, '0')}-${String(dayDate).padStart(2, '0')}`;
 
     try {
-      const { data } = await axios.get(`http://localhost:8080/api/bookings/day`, {
+      const { data } = await axios.get(`http://localhost:8080/api/duty-schedules/day`, {
         params: { date: formattedDate }
       });
 
@@ -94,13 +102,13 @@ function isFutureOrToday(day: Date | null) {
     <div v-if="isVisible" class="day-view">
       <BaseButton text="✖" type="button" class="close-button" @click="closeDayView" />
       <h2 class="centered-date">{{ day?.toDateString() }}</h2>
-      <div class="activity-header">
+      <div class="schedule-header">
         <div
             v-for="employee in employeeNames"
             :key="employee"
-            class="activity-name"
+            class="schedule-name"
         >
-          <h3>{{ employee }}</h3>
+          <h3 class="schedule-name-text">{{ employee }}</h3>
         </div>
       </div>
       <div class="day-grid">
@@ -110,12 +118,12 @@ function isFutureOrToday(day: Date | null) {
             :endHour="isWeekend(day) ? weekendEndHour : endHour"
         />
         <!-- Activity Columns -->
-        <div class="activity-columns">
+        <div class="schedule-columns">
           <ScheduleColumn
             v-for="employee in employeeNames"
             :key="employee"
             :employee-name="employee"
-            :employee-color="employeeColors[employee]"
+            :employee-color="employeeColors[employee] || 'light-grey'"
             :day="day"
             :duties="filteredDuties(employee)"
           />
@@ -134,18 +142,18 @@ function isFutureOrToday(day: Date | null) {
 
 <style scoped>
 .day-view {
-  width: 60%;
+  width: 70%;
   padding: 20px;
   background: #f0f0f0;
   border-left: 1px solid #ccc;
   border-radius: 10px;
-  position: absolute;
   right: 0;
   top: 0;
-  height: 100%;
   z-index: 10;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  height: 100vh;
 }
 
 .close-button {
@@ -177,15 +185,28 @@ function isFutureOrToday(day: Date | null) {
   color: #333333;
 }
 
-.activity-header {
+.schedule-header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin-bottom: 10px;
+  margin-left: 50px;
 }
 
-.activity-name {
-  font-weight: bold;
-  color: #333;
+.schedule-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.schedule-name-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  display: block;
+  max-width: 100px;
+  text-align: center;
 }
 
 .day-grid {
@@ -195,7 +216,7 @@ function isFutureOrToday(day: Date | null) {
   flex-grow: 1;
 }
 
-.activity-columns {
+.schedule-columns {
   display: flex;
   flex-grow: 1;
 }

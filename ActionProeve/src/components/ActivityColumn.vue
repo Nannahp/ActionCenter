@@ -92,7 +92,7 @@ function closeModal() {
 .activity-column {
   flex: 1;
   position: relative;
-  margin-right: 20px;
+  margin-right: 5px;
 }
 
 .event-grid {
@@ -101,12 +101,12 @@ function closeModal() {
 }
 
 .event-block {
-  background-color: rgba(255, 182, 193, 0.7);
+  background-color: #b3b3b3;
   border-radius: 5px;
   padding-top: 5px;
   padding-left: 5px;
   padding-right: 5px;
-  color: white;
+  color: #1f2023;
   font-size: 12px;
   font-weight: bold;
   margin-bottom: 1px;

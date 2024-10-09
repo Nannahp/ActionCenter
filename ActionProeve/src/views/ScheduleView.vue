@@ -83,8 +83,8 @@ const closeForm = () => {
   align-items: center;
   position: relative;
   width: 100%;
-  height: calc(100% - 75px); /* Adjust this value based on your header's height */
-  margin-top: 10px;
+  height: 100%;
+  background-color: white;
 }
 
 /* Form styling when visible */
