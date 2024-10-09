@@ -40,7 +40,12 @@ const formVisible = ref(false); // Initially set to false
 const handleDropdownSelect = (value: string) => {
   if (value === 'add-activity') {
     formVisible.value = true;
-    (document.querySelector('.month-view') as HTMLElement).classList.add('blurred');
+    const monthViewElement = document.querySelector('.month-view') as HTMLElement;
+
+    // Check if the element exists before trying to modify its classList
+    if (monthViewElement) {
+      monthViewElement.classList.add('blurred');
+    }
   }
 };
 

@@ -12,7 +12,7 @@ export default defineComponent({
     BaseNavigation
   },
   setup(_,  { emit }) {
-    const formVisible = ref(false);
+    //const formVisible = ref(false);
     const navItems = [
       {label: "Activities", link: "/"}
     ];
@@ -22,6 +22,10 @@ export default defineComponent({
       {label: 'Remove Activity', value: 'remove-activity'}
     ];
 
+    const handleDropdownSelect = (value: string) => {
+      emit("dropdown-select",value);
+    };
+    /*
     //Scroller til det valgte element på siden.
     const handleDropdownSelect = (value: string) => {
       if (value === 'add-activity') {
@@ -29,12 +33,13 @@ export default defineComponent({
         emit('dropdown-select', value)
       }
     };
+    */
 
     return {
       navItems,
       dropdownItems,
       handleDropdownSelect,
-      formVisible
+      
     };
   },
 });
