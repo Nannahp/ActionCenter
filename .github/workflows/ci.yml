@@ -6,12 +6,14 @@ on:
       - main
       - github-actions
       - add-activity-fixes
+      - master-mock
 
   pull_request:
     branches:
       - main
       - github-actions
       - add-activity-fixes
+      - master-mock
 
 jobs:
   # Backend job

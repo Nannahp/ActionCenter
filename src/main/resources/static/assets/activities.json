@@ -1,1 +1,38 @@
-[{"activityName":"Go-kart","durations":["30 min","1 time","1.5 timer"],"information":"Go-kart er en sjov aktivitet for alle aldre! Minimum højde: 120 cm. Alder: 10+.","price":0,"minPeople":0,"maxPeople":0,"image":"https://www.Gocart.com/wildthings.jpg"},{"activityName":"Paintball","durations":["1 time","2 timer"],"information":"Paintball er for minimum 8 personer. Udendørs og indendørs muligheder.","price":0,"minPeople":0,"maxPeople":0,"image":"https://www.Gocart.com/wildthings.jpg"},{"activityName":"Sumo Wrestling","durations":["15 min","30 min","1 time"],"information":"Sumo Wrestling er en sjov 1-mod-1 aktivitet.","price":0,"minPeople":0,"maxPeople":0,"image":"https://www.Gocart.com/wildthings.jpg"},{"activityName":"Sumo Fodbold","durations":["30 min","1 time"],"information":"Sumo Fodbold er sjovt og aktivt. Minimum 4 personer, max 6 indendørs og 8-20 udendørs.","price":0,"minPeople":0,"maxPeople":0,"image":"https://www.Gocart.com/wildthings.jpg"},{"activityName":"baadmintton","durations":["30","1"],"information":"xcvbnkl","price":500,"minPeople":5,"maxPeople":50,"image":"https://exmaple.com"}]
+[
+  {
+    "activityName": "Go-kart",
+    "durations": ["30 min.", "1 hour", "1.5 hours"],
+    "information": "Get ready for an adrenaline-pumping experience with our thrilling go-karting! Race against your friends on our expertly designed track, featuring sharp turns and exhilarating straightaways. Perfect for all skill levels, our go-karts provide a safe yet exciting way to satisfy your need for speed. Whether you're looking for a fun day out with family or an intense competition with friends, go-karting offers unforgettable memories. Join us for an adventure you won't want to miss!! \n\nMinimum højde: 120 cm. Alder: 10+.",
+    "price": 300,
+    "minPeople": 1,
+    "maxPeople": 10,
+    "image": "https://img.freepik.com/free-photo/joyful-man-having-fun_23-2151058732.jpg?t=st=1728241957~exp=1728245557~hmac=57c851a3805b0eee3ee938b5a0e8e37b915b6720d8001339d12c95d7770bfe4c&w=1800"
+  },
+  {
+    "activityName": "Paintball",
+    "durations": ["1 hour", "2 hour"],
+    "information": "Dive into the action with our heart-pounding paintball experience! Team up with friends and strategize as you navigate through obstacles and engage in exciting battles. Our state-of-the-art equipment and vibrant arenas ensure an unforgettable adventure for everyone. Perfect for birthday parties, corporate events, or just a fun day out, paintball will keep you on your toes and adrenaline pumping. Gear up and unleash your competitive spirit in a colorful showdown!\n\nPaintball er for minimum 8 personer. Udendørs og indendørs muligheder.",
+    "price": 300,
+    "minPeople": 1,
+    "maxPeople": 10,
+    "image": "https://img.freepik.com/premium-photo/organize-colorful-rosh-holi-paintball-challenge-generative-ai_1198295-80423.jpg?w=1800"
+  },
+  {
+    "activityName": "Sumo Wrestling",
+    "durations": ["15 min.", "30 min.", "1 hour"],
+    "information": "Experience the unique thrill of sumo wrestling at our adventure center! Step into the ring and challenge your friends to a playful showdown in oversized inflatable sumo suits. It's a hilarious and entertaining activity that guarantees laughter and friendly competition. Perfect for all ages, sumo wrestling promotes teamwork and sportsmanship in a fun, safe environment. Get ready to bounce, roll, and wrestle your way to victory!",
+    "price": 300,
+    "minPeople": 1,
+    "maxPeople": 10,
+    "image": "https://www.sunjoygz.com/uploads/allimg/190605/4-1Z605142330624.jpg"
+  },
+  {
+    "activityName": "Sumo Football",
+    "durations": ["30 min.", "1 hour"],
+    "information": "Take your love for football to the next level with our exciting sumo football game! Strap into inflatable sumo suits and face off against your friends in this hilarious twist on the classic sport. The oversized suits add a fun challenge, making every tackle and goal an unforgettable experience. Ideal for team-building events or parties, sumo football guarantees laughter and enjoyment for all participants. Join us for a unique game that’s sure to bring everyone together!\n\n Minimum 4 personer, max 6 indendørs og 8-20 udendørs.",
+    "price": 300,
+    "minPeople": 1,
+    "maxPeople": 10,
+    "image": ""
+  }
+]

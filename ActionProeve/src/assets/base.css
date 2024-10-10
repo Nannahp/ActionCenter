@@ -1,6 +1,6 @@
 :root {
   --action-blue: #00aeff; /* Light blue for accents */
-  --action-white: #ffffff; /* White for text/background */
+  --action-white: #efefef; /* White for text/background */
   --action-black: #000000; /* Black for text/background */
 
   --bg-color-light: #f0f0f0; /* Light background color for contrast */

@@ -13,7 +13,6 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String activityName;
     private String customerName;
     private String email;
