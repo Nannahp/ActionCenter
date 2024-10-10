@@ -15,7 +15,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bookings")
-// @CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class BookingController {
     @Autowired
     private EmployeeService employeeService;
@@ -27,19 +28,9 @@ public class BookingController {
         return bookingService.getAllBookings();
     }
 
-    @PostMapping
+    @PostMapping("/createBooking")
     public Booking createBooking(@RequestBody Booking booking) {
         return bookingService.createBooking(booking);
-    }
-
-    // TESTING
-    @PostMapping("/create-booking/hardcoded")
-    public ResponseEntity<?> createHardcodedbooking(@RequestBody Booking booking) {
-        Optional<Employee> optionalEmployee = employeeService.findById(1l);
-        Employee employee = optionalEmployee.orElse(null);
-        booking.setEmployee(employee); // Set the employee reference
-        bookingService.createBooking(booking);
-        return ResponseEntity.ok("Booking registered successfully");
     }
 
     @GetMapping("/day")

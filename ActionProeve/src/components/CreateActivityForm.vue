@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import BaseInput from '@/components/BaseInput.vue'; 
 import BaseButton from './BaseButton.vue';
 import axios from 'axios';
@@ -7,25 +7,31 @@ import axios from 'axios';
 const emit = defineEmits(['exitForm']);
 const currentSlide = ref(1);
 const activityName = ref('');
-const activityTimes = ref('');
-const activityDescription = ref('');
-const activityImage = ref('');
+const durations = ref('');
+const information = ref('');
+const image = ref('');
 const submitted = ref(false);
+const minPeople = ref('');
+const maxPeople = ref ('');
+const price = ref('');
 
 function nextSlide() {
   currentSlide.value += 1;
 }
 
 async function handleSubmit() {
-  const timesArray = activityTimes.value.split(',')
-    .map(time => parseFloat(time.trim()))
-    .filter(time => !isNaN(time));
+  const timesArray = durations.value.split(',')
+  .map(item => item.trim())
+  
 
   const activity = {
-    name: activityName.value,
-    times: timesArray,
-    description: activityDescription.value,
-    imageUrl: activityImage.value,
+    activityName: activityName.value,
+    durations: timesArray,
+    information: information.value,
+    image: image.value,
+    minPeople: minPeople.value,
+    maxPeople: maxPeople.value,
+    price: price.value,
   };
 
   console.log("Submitting activity: ", activity);
@@ -48,15 +54,19 @@ function exitForm() {
 function resetForm() {
   currentSlide.value = 1;
   activityName.value = '';
-  activityDescription.value = '';
-  activityTimes.value = '';
-  activityImage.value = ''; 
+  information.value = '';
+  durations.value = '';
+  image.value = ''; 
+  minPeople.value = ('');
+  maxPeople.value = ('');
+  price.value = ('');
   submitted.value = false; 
 }
 </script>
 
 <template>
-  <form @submit.prevent="currentSlide === 2 ? handleSubmit() : nextSlide()">
+  <form @submit.prevent="currentSlide === 3 ? handleSubmit() : nextSlide()">
+    <BaseButton text="✖" type="button" class="close-button" @click="exitForm" />
     <h2>Add New Activity</h2>
     <div v-if="currentSlide === 1">
       <div class="input-wrapper">
@@ -73,14 +83,15 @@ function resetForm() {
             labelFor="activityName"
           />
 
-          <label for="activityDescription" class="input-label">Enter activity description:</label>
+          <label for="activityInformation" class="input-label">Enter activity information:</label>
           <textarea
-            id="activityDescription"
-            name="activityDescription"
-            v-model="activityDescription"
+            id="information"
+            name="information"
+            v-model="information"
             placeholder="fx: Our badminton court can fit up to 4 people..."
             required
             class="big-input"
+             labelFor="information"
           ></textarea>
         </div>
         <div class="button-wrapper">
@@ -94,26 +105,28 @@ function resetForm() {
         <div class="input">
     
           <BaseInput
-            id="activityTimes"
-            name="activityTimes"
-            v-model="activityTimes"
+            id="durations"
+            name="durations"
+            v-model="durations"
             placeholder="fx: 30, 45, 60"
             required
             class="small-input"
             labelText="Enter time in minutes (comma separated):"
-            labelFor="activityTimes"
+            labelFor="durations"
+            
           />
 
         
           <BaseInput
-            id="activityImage"
-            name="activityImage"
-            v-model="activityImage"
+            id="image"
+            name="image"
+            v-model="image"
             placeholder="fx: https://example.com/image.jpg"
             required
             class="small-input"
             labelText="Enter an image URL:"
-            labelFor="activityImage"
+            labelFor="image"
+            type="URL"
           />
         </div>
         <div class="button-wrapper">
@@ -123,6 +136,51 @@ function resetForm() {
     </div>
 
     <div v-if="currentSlide === 3">
+      <div class="input-wrapper">
+        <div class="input">
+    
+          <BaseInput
+            id="minPeople"
+            name="minPeople"
+            v-model="minPeople"
+            placeholder="fx: 6"
+            required
+            class="small-input"
+            labelText="Enter minimum reqiured people:"
+            labelFor="minPeople"
+            type="number"
+          />
+        
+          <BaseInput
+            id="maxPeople"
+            name="maxPeople"
+            v-model="maxPeople"
+            placeholder="fx: 20"
+            required
+            class="small-input"
+            labelText="Enter maximum number of people:"
+            labelFor="maxPeople"
+            type="number"
+          />
+          <BaseInput
+            id="price"
+            name="price"
+            v-model="price"
+            placeholder="fx: 200"
+            required
+            class="small-input"
+            labelText="Enter the price per person:"
+            labelFor="price"
+            type="number"
+          />
+        </div>
+        <div class="button-wrapper">
+          <BaseButton text="Submit" type="submit" />
+        </div>
+      </div>
+    </div>
+
+    <div v-if="currentSlide === 4">
       <div class="input-wrapper">
         <div class="success-message">
           <h3 v-if="submitted">Activity added!</h3>
@@ -136,10 +194,11 @@ function resetForm() {
   </form>
 </template>
 <style scoped>
+@import '@/assets/base.css';
 /* Center the form on the page and set a fixed height */
 form {
   width: 40em;
-  height: 25em;
+  height: 27em;
   margin: 0 auto;
   padding: 2rem;
   text-align: left;
@@ -148,19 +207,30 @@ form {
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
-
+  position: relative; /* Add this to position the close button inside the form */
 }
 .input {
   height: 18em;
-    align-content: center;
-    width: 95%;
-    align-self: center;
+  align-content: center;
+  width: 95%;
+  align-self: center;
 }
 
 /* Styling for headers */
 h2 {
-  color: black;
   text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10; /* Optional: Ensure it appears on top of the form content */
+  color: #030003;
 }
 
 /* Wrapper for form inputs */
@@ -220,6 +290,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 18px;
 }
 .success-message {
   height: 18em;

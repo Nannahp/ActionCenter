@@ -1,37 +1,56 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import BaseNavigation from './BaseNavigation.vue';
-
+import {computed, ref} from 'vue';
+import {defineComponent} from "vue";
+import BaseNavigation from "@/components/BaseNavigation.vue";
+import BaseButton from "@/components/BaseButton.vue";
+import {useRoute, useRouter} from "vue-router";
 
 export default defineComponent({
   name: 'TestHeader',
   components: {
+    BaseButton,
     BaseNavigation
   },
   setup(_,  { emit }) {
+    const router = useRouter();
+    const route = useRoute();
     const formVisible = ref(false);
     const navItems = [
-   {label: "Activities", link: "/"}
+      {label: "Activities", link: "/"}
     ];
 
     const dropdownItems = [
-    {label: 'Add Activity', value: 'add-activity'},
-    {label: 'Remove Activity', value: 'remove-activity'}
+      {label: 'Add Activity', value: 'add-activity'},
+      {label: 'Remove Activity', value: 'remove-activity'}
     ];
 
     //Scroller til det valgte element på siden.
     const handleDropdownSelect = (value: string) => {
-     if (value === 'add-activity') {
+      if (value === 'add-activity') {
         formVisible.value = true;
         emit('dropdown-select', value)
-     }
+      }
+    };
+
+    const buttonText = computed(() => {
+      return route.name === 'schedule' ? 'Calendar' : 'Schedule';
+    });
+
+    const handleButtonClick = () => {
+      if (route.name === 'schedule') {
+        router.push({ name: 'calender' });
+      } else {
+        router.push({ name: 'schedule' });
+      }
     };
 
     return {
       navItems,
       dropdownItems,
       handleDropdownSelect,
-      formVisible
+      formVisible,
+      buttonText,
+      handleButtonClick
     };
   },
 });
@@ -45,30 +64,39 @@ export default defineComponent({
     </div>
     <div class="nav-section">
       <BaseNavigation
-        :navItems="navItems"
-        dropdownLabel="Activities"
-        :dropdownItems="dropdownItems"
-        @dropdown-select="handleDropdownSelect"
+          :navItems="navItems"
+          dropdownLabel="Activities"
+          :dropdownItems="dropdownItems"
+          @dropdown-select="handleDropdownSelect"
       />
-      <div class="login-placeholder">Login</div>
+
+      <BaseButton
+          class="schedule-button"
+          :text="buttonText"
+          type="button"
+          @click="handleButtonClick"
+      />
+
+      <BaseButton class="logout-button" text="Logout" type="button" />
     </div>
   </header>
 </template>
 
 <style scoped>
+/* Styles for other pages */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100vh;
-  z-index: 10000;
-  position: fixed;
+  width: 100%;
+  background-color: #b3b3b3;
 }
 
+
 .logo img {
-  height: 50px;
+  height: 60px;
+  margin-left: 10px;
 }
 
 .nav-section {
@@ -77,8 +105,26 @@ export default defineComponent({
   gap: 15px;
 }
 
-.login-placeholder {
-  margin-left: auto;
+.logout-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+  width: 90px;
+  height: 45px;
 }
+
+.schedule-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 90px;
+  height: 45px;
+}
+
 </style>

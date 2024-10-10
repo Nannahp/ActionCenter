@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
-import type {Booking} from "@/models/Booking";
-import BookingDetails from '@/components/BookingDetails.vue';
 import {ref} from "vue";
+import type {DutySchedule} from "../models/DutySchedule";
 
 const props = defineProps<{
-  activityName: string;
-  bookings: Booking[];
-  activityColor: string;
+  employeeName: string;
+  duties: DutySchedule[];
+  employeeColor: string;
   day: Date | null;
 }>();
 
-const selectedBooking = ref<Booking | null>(null);
+const selectedDuty = ref<DutySchedule | null>(null);
 const isModalVisible = ref(false);
 
 function isWeekend(date: Date): boolean {
@@ -19,10 +18,10 @@ function isWeekend(date: Date): boolean {
   return dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
 }
 
-function getEventStyle(booking: Booking): CSSProperties {
+function getEventStyle(duty: DutySchedule): CSSProperties {
   //So TS can read it
-  const startDateTime = new Date(`${booking.date}T${booking.startTime}`);
-  const endDateTime = new Date(`${booking.date}T${booking.endTime}`);
+  const startDateTime = new Date(`${duty.date}T${duty.startTime}`);
+  const endDateTime = new Date(`${duty.date}T${duty.endTime}`);
 
   const startHour = startDateTime.getHours();
   const startMinutes = startDateTime.getMinutes();
@@ -41,7 +40,7 @@ function getEventStyle(booking: Booking): CSSProperties {
   return {
     top: `${top}%`,
     height: `${height}%`,
-    backgroundColor: props.activityColor || 'darkgray',
+    backgroundColor: props.employeeColor || 'darkgray',
     position: 'absolute',
     width: '100%',
   };
@@ -52,8 +51,8 @@ function formatTime(date: string, time: string) {
   return new Date(dateTimeString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-function openBookingDetails(booking: Booking) {
-  selectedBooking.value = booking;
+function openDutyDetails(duty: DutySchedule) {
+  selectedDuty.value = duty;
   isModalVisible.value = true;
 }
 
@@ -66,25 +65,18 @@ function closeModal() {
   <div class="activity-column">
     <div class="event-grid">
       <div
-          v-for="booking in bookings"
-          :key="booking.id"
-          :style="getEventStyle(booking)"
+          v-for="duty in duties"
+          :key="duty.id"
+          :style="getEventStyle(duty)"
           class="event-block"
-          @click="openBookingDetails(booking)"
+          @click="openDutyDetails(duty)"
       >
-        {{ formatTime(booking.date, booking.startTime) }} -
-        {{ formatTime(booking.date, booking.endTime) }}
+        {{ formatTime(duty.date, duty.startTime) }} -
+        {{ formatTime(duty.date, duty.endTime) }}
         <br />
-        {{ booking.customerName }}
+        {{ employeeName || 'Unknown Employee'}}
       </div>
     </div>
-
-    <BookingDetails
-        :isVisible="isModalVisible"
-        :booking="selectedBooking"
-        :day="props.day"
-        @close="closeModal"
-    />
   </div>
 </template>
 

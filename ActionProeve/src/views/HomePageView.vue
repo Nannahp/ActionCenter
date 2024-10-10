@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Activity from '../components/Activity.vue'
-import activitiesData from '@/assets/activities1.json'
+//import activitiesData from '@/assets/activities1.json'
 import AdventureHeader from "@/components/AdventureHeader.vue";
 import {nextTick, onMounted, ref} from "vue";
 import axios from "axios";
 import '@/assets/IndexMain.css'
+import FrontPageCarousel from "@/components/FrontPageCarousel.vue";
 
 // Definerrer type for Activity
 interface ActivityType {
@@ -12,51 +13,50 @@ interface ActivityType {
   durations: string[];
   information: string;
   image: string;
+  price: number,
+  minPeople: number,
+  maxPeople:number
 }
 
 const activities = ref<ActivityType[]>([])
 
 onMounted(async () => {
-  activities.value = activitiesData as ActivityType[];
+  try {
+    const response = await axios.get('http://localhost:8080/activities');
+    activities.value = response.data;
 
-  await nextTick();
+    await nextTick();
 
-  const activityElements = document.querySelectorAll(".activity");
+    const activityElements = document.querySelectorAll(".activity");
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("slide-in");
-      } else {
-        entry.target.classList.remove("slide-in");
-      }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("slide-in");
+        } else {
+          entry.target.classList.remove("slide-in");
+        }
+      });
     });
-  });
 
-  activityElements.forEach(activity => {
-    observer.observe(activity);
-  });
+    activityElements.forEach(activity => {
+      observer.observe(activity);
+    });
+
+  } catch (error) {
+    console.error('Fejl under hentning af aktiviteter: ', error);
+  }
 });
 
-
-
-//Henter data fra backend, når komponentet er monteret.
-/*onMounted(() => {
-  axios.get('http://localhost:8080/activities')
-      .then(response => {
-        activities.value = response.data;
-      })
-      .catch(error =>{
-        console.error('Fejl desværre: ', error)
-      });
-})
-
- */
 
 </script>
 
 <template>
   <AdventureHeader />
+
+  <div class="carousel">
+  <FrontPageCarousel />
+  </div>
 
   <div id="{{activityName.toLowerCase()}}" class="activities-container">
     <h1>💥 Activities 💥</h1>
@@ -77,10 +77,13 @@ onMounted(async () => {
 @media (min-width: 1024px) {
   header {
     display: flex;
+
+
     place-items: center;
     width: 100%;
   }
 }
+
 
 .activities-container {
   display: flex;

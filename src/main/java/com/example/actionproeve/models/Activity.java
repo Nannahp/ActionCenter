@@ -7,16 +7,23 @@ public class Activity {
     private String activityName;
     private List<String> durations;
     private String information;
+    private int price;
+    private int minPeople;
+    private int maxPeople;
     private String image;
 
 
     public Activity() {
     }
 
-    public Activity(String activityName, List<String> durations, String information, String image) {
+    public Activity(String activityName, List<String> durations, String information,
+                    int price, int minPeople, int maxPeople, String image) {
         this.activityName = activityName;
         this.durations = durations;
         this.information = information;
+        this.price = price;
+        this.minPeople = minPeople;
+        this.maxPeople = maxPeople;
         this.image = image;
     }
 
@@ -42,6 +49,30 @@ public class Activity {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getMinPeople() {
+        return minPeople;
+    }
+
+    public void setMinPeople(int minPeople) {
+        this.minPeople = minPeople;
+    }
+
+    public int getMaxPeople() {
+        return maxPeople;
+    }
+
+    public void setMaxPeople(int maxPeople) {
+        this.maxPeople = maxPeople;
     }
 
     public String getImage() {

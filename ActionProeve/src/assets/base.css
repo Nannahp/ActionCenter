@@ -1,27 +1,80 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Galada&display=swap');
-
 :root {
-  --action-blue: #00aeff;
-  --action-red: #e83a00;
-  --action-yellow: #ffcf00;
-  --action-white: #fdfffb;
-  --action-black: #030003;
+  --action-blue: #00aeff; /* Light blue for accents */
+  --action-white: #efefef; /* White for text/background */
+  --action-black: #000000; /* Black for text/background */
 
-  --bg-color-dark: #1f2023;
+  --bg-color-light: #f0f0f0; /* Light background color for contrast */
+  --text-color-dark: #000000; /* Dark text color */
 
-  --text-color-light: #b3b3b3;
+  --highlight-color: var(--action-blue); /* To highlight elements */
 }
 
-/* skygge under logo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Reset margins and padding for consistency */
+html, body {
+  height: 100%; /* Ensure the body takes up the full height */
+  width: 100%; /* Ensure the body takes up the full width */
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+body {
+  color: var(--text-color-dark); /* Set text color to black */
+  background-color: var(--action-white); /* Set background color to white */
+  display: flex; /* Use flex to center content */
+  flex-direction: column; /* Stack children vertically */
+}
+
+#app {
+  min-height: 100vh; /* Ensure it covers the full height of the viewport */
+  width: 100%; /* Ensure it covers the full width of the viewport */
+  display: flex; /* Optional: This allows for flexible layout if needed */
+  flex-direction: column; /* Ensure children are stacked vertically */
+}
+
+
+/* Images should remain responsive */
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* Add drop shadow under the logo */
 .logo {
- filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.7));
 }
 
-/* H1 til index side. */
-.index h1 {
- font-family: "Galada", cursive;
- font-weight: 400;
- font-style: normal;
+/* Style headers with blue color for emphasis */
+h1, h2, h3 {
+  color: var(--highlight-color); /* Blue color for headings */
+  text-align: center;
+
+  /* Override any previous animations */
+  animation: none;
+  border: none;
+  overflow: visible;
+  white-space: normal;
+  filter: none;
+  font-family: sans-serif;
 }
 
+/* Customize paragraph text */
+p {
+  font-weight: normal;
+  font-size: 1.2rem;
+  color: var(--text-color-dark); /* Ensure text is readable */
+}
+
+/* Media queries for responsiveness */
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+}

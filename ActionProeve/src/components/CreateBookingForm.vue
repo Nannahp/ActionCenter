@@ -1,19 +1,30 @@
 <template>
-  <div>
-    <h2>New Booking</h2>
-    <form @submit.prevent="submitBooking">
+  <div class="create-booking-form-backdrop">
+    <div class="create-booking-form">
+      <h2>New Booking</h2>
+      <form @submit.prevent="submitBooking">
+        <BaseButton text="✖" type="button" class="close-button" @click="closeForm" />
 
-      <BaseInput
-          id="activityName"
-          name="activityName"
-          labelFor="activityName"
-          labelText="Activity name:"
-          placeholder="eg. Laser tag"
-          v-model="booking.activityName"
-          required
-      />
+        <BaseSelectInput
+            id="activityName"
+            name="activityName"
+            labelText="Activity:"
+            placeholder="Please select an activity"
+            :options="activities"
+            v-model="booking.activityName"
+            required
+        />
 
-      <BaseInput
+
+<!--        <label for="activityName">Activity:</label>
+        <select id="activityName" v-model="booking.activityName" required>
+          <option disabled value="">Please select an activity</option>
+          <option v-for="activity in activities" :key="activity.activityName" :value="activity.activityName">
+            {{ activity.activityName }}
+          </option>
+        </select>-->
+
+        <BaseInput
           id="customerName"
           name="customerName"
           labelFor="customerName"
@@ -23,7 +34,7 @@
           required
       />
 
-      <BaseInput
+        <BaseInput
           id="email"
           name="email"
           labelFor="email"
@@ -33,11 +44,11 @@
           required
       />
 
-      <div>
+        <div>
         <input type="hidden" id="employee" v-model="booking.employee" required />
-      </div>
+        </div>
 
-      <BaseInput
+        <BaseInput
           id="date"
           name="date"
           labelFor="date"
@@ -48,7 +59,7 @@
           required
       />
 
-      <BaseInput
+        <BaseInput
           id="startTime"
           name="startTime"
           labelFor="startTime"
@@ -59,7 +70,7 @@
           required
       />
 
-      <BaseInput
+        <BaseInput
           id="endTime"
           name="endTime"
           labelFor="endTime"
@@ -70,69 +81,111 @@
           required
       />
 
-      <p>{{ submissionStatus }}</p>
+        <p>{{ submissionStatus }}</p>
 
-      <BaseButton
+        <BaseButton
           type="submit"
           text="Save"/>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import {onMounted, ref} from 'vue';
 import BaseInput from "@/components/BaseInput.vue";
 import BaseButton from "@/components/BaseButton.vue";
-
 import axios from "axios";
+import BaseSelectInput from "@/components/BaseSelectInput.vue";
 
-export default {
-  components: {BaseButton, BaseInput},
-  data() {
-    return {
-      booking: {
-        date: '',
-        startTime: '',
-        endTime: '',
-        activityName: '',
-        customerName: '',
-        email: '',
-        employeeId: '',
-      },
-    };
-  },
-  methods: {
-    async submitBooking() {
-      console.log("Booking submitted:", this.booking);
-      try {
-        const response = await axios.post('/api/bookings', this.booking);
-        console.log("Response:", response.data);
+let activities = ref([]);
 
-        // If the submission is successful, update status and clear the form
-        this.submissionStatus = 'Booking submitted successfully!';
-        this.resetBookingForm(); // Reset the form after successful submission
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('http://localhost:8080/activities');
+    activities.value = data.map(activity => ({ value: activity.activityName, text: activity.activityName }));
+  } catch (error) {
+    console.error('Error fetching activities:', error);
+  }
+});
 
-      } catch (error) {
-        console.error("Error submitting booking:", error);
-        this.submissionStatus = 'Error submitting booking. Please try again.';
-      }
-    },
-    resetBookingForm() {
-      // Reset the form fields after successful submission
-      this.booking = {
-        date: '',
-        startTime: '',
-        endTime: '',
-        activityName: '',
-        customerName: '',
-        email: '',
-        employeeId: '',
-      };
-    },
-  },
-};
+const emit = defineEmits(['close-form']);
 
+let booking = ref({
+  date: '',
+  startTime: '',
+  endTime: '',
+  activityName: '',
+  customerName: '',
+  email: '',
+  employeeId: 1, //just for testing
+});
+
+async function submitBooking() {
+  console.log("Booking submitted:", booking.value);
+  try {
+    const response = await axios.post('http://localhost:8080/api/bookings/createBooking', booking.value);
+    console.log("Response:", response.data);
+
+    // If the submission is successful, update status and clear the form
+    booking.value = resetBookingForm(); // Reset the form after successful submission
+
+    closeForm(); // Close the form after successful submission
+  } catch (error) {
+    console.error("Error submitting booking:", error);
+  }
+}
+
+function resetBookingForm() {
+  // Reset the form fields after successful submission
+  return {
+    date: '',
+    startTime: '',
+    endTime: '',
+    activityName: '',
+    customerName: '',
+    email: '',
+    employeeId: '',
+  };
+}
+
+function closeForm() {
+  emit('close-form');
+}
 </script>
 
 <style scoped>
+.create-booking-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
 
+.create-booking-form .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.create-booking-form-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
 </style>
