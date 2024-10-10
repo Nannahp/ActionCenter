@@ -4,19 +4,19 @@ import missingImage from '../assets/missingpicture.png'
 
 const props = defineProps<{
   activity: {
-    activityName: string,
-    durations: string[],
-    information: string,
-    price: number,
-    minPeople: number,
-    maxPeople: number,
+    activityName: string
+    durations: string[]
+    information: string
+    price: number
+    minPeople: number
+    maxPeople: number
     image: string
-  },
+  }
   isReversed: boolean
-}>();
+}>()
 
-//Tjekker om der er et image i jsonfilen, og ellers bruger den det lokale billede.
-const imageMissing = props.activity.image || missingImage
+// //Tjekker om der er et image i jsonfilen, og ellers bruger den det lokale billede.
+// const imageMissing = props.activity.image || missingImage
 </script>
 
 <template>
@@ -24,21 +24,21 @@ const imageMissing = props.activity.image || missingImage
     <div class="activity-details">
       <h2>{{ props.activity.activityName }}</h2>
 
-      <p class="info-line">Choose between: </p>
+      <p class="info-line">Choose between:</p>
       <p>{{ props.activity.durations.join(', ') }}</p>
 
-      <p class="info-line">Info: </p>
+      <p class="info-line">Info:</p>
       <p>{{ props.activity.information }}</p>
 
-      <p class="info-line">Price: </p>
+      <p class="info-line">Price:</p>
       <p>{{ props.activity.price }} DKK</p>
 
-      <p class="info-line">Participants: </p>
+      <p class="info-line">Participants:</p>
       <p>Min: {{ props.activity.minPeople }} | Max: {{ props.activity.maxPeople }}</p>
     </div>
 
-    <div class="activity-image">
-      <img class="image" :src="imageMissing" :alt="props.activity.activityName + ' Image'" />
+    <div class="activity-image image" :style="{ backgroundImage: `url(${props.activity.image})` }">
+      <!-- <div class="image" :alt="props.activity.activityName + ' Image'"></div> -->
     </div>
   </div>
 </template>
@@ -46,43 +46,51 @@ const imageMissing = props.activity.image || missingImage
 <style scoped>
 .activity {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
   margin-bottom: 150px;
   margin-top: 40px;
-  padding: 20px;
-
+  height: 100%;
+  padding: 0 50px;
 }
 
 .activity.reverse {
   flex-direction: row-reverse;
 }
 
-.activity-details{
+.activity-details {
   flex: 1;
-  margin-left: 120px;
-  max-width: 600px;
+  max-width: 40vw;
 }
+
 .activity.reverse activity-details {
   margin-left: 0px;
-  margin-right: 150px;
+  padding-right: 150px;
 }
 
 .activity-image {
   flex: 1;
-  margin-left: 20px;
   text-align: center;
 }
+
+.activity-image {
+  flex: 1;
+  text-align: center;
+  height: 400px;
+  width: 40vw;
+  background-size: cover;
+  background-position: center;
+}
 .activity.reverse .activity-image {
-  margin-left: 50px;
-  margin-right: 0; /* Juster margin for billedet, når rækkefølgen ændres */
+  margin-right: 0;
 }
 
 .image {
-  max-width: 400px;
-  height: auto;
+  max-width: 45vw;
+  max-height: 400px;
   transition: transform 0.3s ease;
 }
+
 .image:hover {
   transform: scale(1.1);
 }
@@ -98,6 +106,4 @@ p {
   margin-top: 0;
   line-height: 1.6;
 }
-
-
 </style>
