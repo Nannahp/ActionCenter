@@ -6,8 +6,11 @@ const props = defineProps<{
     activityName: string,
     durations: string[],
     information: string,
+    price: number,
+    minPeople: number,
+    maxPeople: number,
     image: string
-  }
+  },
   isReversed: boolean
 }>();
 
@@ -19,10 +22,18 @@ const imageMissing = props.activity.image || missingImage
   <div class="activity" :class="{ reverse: props.isReversed }">
     <div class="activity-details">
       <h2>{{ props.activity.activityName }}</h2>
+
       <p class="info-line">Choose between: </p>
       <p>{{ props.activity.durations.join(', ') }}</p>
+
       <p class="info-line">Info: </p>
       <p>{{ props.activity.information }}</p>
+
+      <p class="info-line">Price: </p>
+      <p>{{ props.activity.price }} DKK</p>
+
+      <p class="info-line">Participants: </p>
+      <p>Min: {{ props.activity.minPeople }} | Max: {{ props.activity.maxPeople }}</p>
     </div>
 
     <div class="activity-image">

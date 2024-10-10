@@ -73,14 +73,15 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 20px;
+  padding: 20px 40px;
   color: var(--action-black);
-  box-shadow: 0px 4px 8px var(--action-white);
+  box-shadow: 0px 4px 8px var(--action-black);
 }
 
 .logo img {
-  height: 70px;
+  height: 110px;
   margin-left: 10%;
+  margin-bottom: 10px;
 }
 
 .nav-list {
@@ -97,7 +98,7 @@ export default defineComponent({
   position: absolute;
   background-color: #2b2d30;
   list-style-type: none;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: block;
   z-index: 1;
@@ -117,12 +118,12 @@ export default defineComponent({
 }
 
 .dropdown-button {
-  padding: 10px;
+  padding: 15px;
   color: #f9f9f9;
   background-color: #e83a00;
   cursor: pointer;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   text-decoration: none;
   display: inline-block;
