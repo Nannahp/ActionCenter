@@ -4,6 +4,7 @@ import TimetableColumn from "@/components/TimetableColumn.vue";
 import ActivityColumn from "@/components/ActivityColumn.vue";
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import CreateBookingForm from "@/components/CreateBookingForm.vue";
 
 const startHour = 10;
 const endHour = 20;
@@ -72,6 +73,11 @@ onMounted(async () => {
   }
 });
 
+let showCreateBookingForm = ref(false);
+
+function openCreateBookingForm() {
+  showCreateBookingForm.value = true;
+}
 
 function closeDayView() {
   emit('close-day-view');
@@ -121,12 +127,13 @@ function isFutureOrToday(day: Date | null) {
         />
       </div>
     </div>
+    <CreateBookingForm v-if="showCreateBookingForm" @close-form="showCreateBookingForm = false" />
     <BaseButton
         v-if="isFutureOrToday(day)"
         text="Create Booking"
         type="button"
         class="create-booking-btn"
-        @click="closeDayView"
+        @click="openCreateBookingForm"
     />
   </div>
 </template>

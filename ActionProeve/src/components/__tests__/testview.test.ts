@@ -1,24 +1,31 @@
 import { mount } from '@vue/test-utils'
-import TestView from '../../views/test-view.vue'
+import view from '../../views/CalenderView.vue'
 import CreateActivityForm from '@/components/CreateActivityForm.vue'
+import BaseNavigation from '../BaseNavigation.vue'
 import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach } from 'node:test'
 
-describe('testview.vue', () => {
-  it('renders Add New Acitivy Button'),
-    () => {
-      const wrapper = mount(TestView)
-      expect(wrapper.find('button').text()).toBe('Add New Activity')
+
+describe('CalenderView.vue', () => {
+
+  beforeEach(() => {
+    const monthView = document.createElement('div');
+    monthView.classList.add('month-view');
+    document.body.appendChild(monthView);
+  });
+  afterEach(() => {
+    const monthView = document.querySelector(".month-view");
+    if( monthView) {
+      document.body.removeChild(monthView);
     }
-  it('should display the CreateActivityForm when the button is clicked', async () => {
-    const wrapper = mount(TestView)
-
-    // Initially, the form is not visible
-    expect(wrapper.findComponent(CreateActivityForm).exists()).toBe(false)
-
-    // Click the button
-    await wrapper.find('button').trigger('click')
-
-    // The form should now be visible
-    expect(wrapper.findComponent(CreateActivityForm).exists()).toBe(true)
   })
-})
+
+  it('should display the CreateActivityForm when the button is clicked', async () => {
+      const wrapper = mount(view, { components: {BaseNavigation}});
+
+      await wrapper.find('.nav-item.dropdown').trigger("mouseover");
+      await wrapper.findAll(".dropdown-menu li a")[0].trigger('click');
+
+      expect(wrapper.findComponent({ name: "CreateActivityForm"}).exists()).toBe(true);    
+    });
+  });
