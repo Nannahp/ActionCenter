@@ -34,18 +34,19 @@ public class ActivityController {
     @GetMapping("/activities")
     public ResponseEntity<List<Activity>> getActivities() throws IOException {
         // Sletter filePath i parameteren TODO
+        String filePath = Paths.get("src", "main", "resources", "static", "assets", "activities.json").toString();
         List<Activity> activities = activityService
-                .readActivitiesFromFile("src\\main\\resources\\static\\assets\\activities.json");
+                .readActivitiesFromFile(filePath);
         return ResponseEntity.ok(activities);
     }
 
     @PostMapping("/add-activity")
     public ResponseEntity<?> saveActivity(@RequestBody Activity activity) {
+        String filePath = Paths.get("src", "main", "resources", "static", "assets", "activities.json").toString();
         System.out.println(activity.getActivityName());
         System.out.println(activity.getInformation());
         System.out.println("Received activity: " + activity);
-        activityService.saveActivity(activity,
-                "src\\main\\resources\\static\\assets\\activities.json");
+        activityService.saveActivity(activity, filePath);
         return ResponseEntity.ok().build();
 
     }

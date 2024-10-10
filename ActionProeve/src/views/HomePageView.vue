@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Activity from '../components/Activity.vue'
 //import activitiesData from '@/assets/activities1.json'
-import AdventureHeader from "@/components/AdventureHeader.vue";
+import
+  AdventureHeader from "@/components/AdventureHeader.vue";
 import {nextTick, onMounted, ref} from "vue";
 import axios from "axios";
 import '@/assets/IndexMain.css'
@@ -12,10 +13,10 @@ interface ActivityType {
   activityName: string;
   durations: string[];
   information: string;
+  price: number;
+  minPeople: number;
+  maxPeople: number;
   image: string;
-  price: number,
-  minPeople: number,
-  maxPeople:number
 }
 
 const activities = ref<ActivityType[]>([])
