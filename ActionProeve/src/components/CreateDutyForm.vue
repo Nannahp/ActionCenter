@@ -189,6 +189,18 @@ form {
   transform: translate(-50%, -50%); /* Center the form */
   z-index: 20; /* Ensure it appears above other content */
 }
+
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  color: grey;
+}
+
+
 .input {
   height: 18em;
   align-content: center;
