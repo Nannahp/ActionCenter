@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 // Rest - retunerer json-data.
 @RestController
@@ -29,13 +30,12 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-
     @GetMapping("/activities")
-    public ResponseEntity<String> getActivities() throws IOException {
-        ClassPathResource resource = new ClassPathResource("activities.json");
-        byte[] jsonData = Files.readAllBytes(Paths.get(resource.getURI()));
-        return ResponseEntity.ok(new String(jsonData));
+    public ResponseEntity<List<Activity>> getActivities() throws IOException {
+        List<Activity> activities = activityService.readActivitiesFromFile();
+        return ResponseEntity.ok(activities);
     }
+
 
     @PostMapping("/add-activity")
     public ResponseEntity<?> saveActivity(@RequestBody Activity activity) {
@@ -50,12 +50,6 @@ public class ActivityController {
 
 
     /*
-     *
-     * @GetMapping("/get-activities")
-     * public List<Activity> getAllActivities() {
-     * return activityService.getAllActivities();
-     * }
-     *
      * @PostMapping("/save-activities") // New endpoint to save hardcoded activities
      * public String saveActivities() {
      * activityService.saveHardcodedActivities();

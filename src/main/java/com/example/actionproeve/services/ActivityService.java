@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ActivityService {
-    private static final String JSON_FILE_PATH = "src/main/resources/activities.json";
+    private static final String JSON_FILE_PATH = "src/main/resources/static/assets/activities.json";
     private final ObjectMapper objectMapper;
 
     public ActivityService(ObjectMapper objectMapper) {
