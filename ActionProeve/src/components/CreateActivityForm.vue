@@ -21,8 +21,8 @@ function nextSlide() {
 
 async function handleSubmit() {
   const timesArray = durations.value.split(',')
-    .map(time => parseFloat(time.trim()))
-    .filter(time => !isNaN(time));
+  .map(item => item.trim())
+  
 
   const activity = {
     activityName: activityName.value,

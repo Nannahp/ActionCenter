@@ -43,7 +43,7 @@ public class ActivityController {
         System.out.println(activity.getInformation());
         System.out.println("Received activity: " + activity);
         activityService.saveActivity(activity,
-                "src\\main\\resources\\static\\assets\\activities.json");
+                "ActionProeve\\src\\assets\\activities1.json");
 
         return ResponseEntity.ok().build();
 
