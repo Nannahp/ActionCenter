@@ -15,7 +15,10 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +34,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class ActivityServiceTest {
     /*
      * @Mock
