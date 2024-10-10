@@ -33,22 +33,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-public class ActivityServiceTest {
-    /*
-     * @Mock
-     * private ObjectMapper objectMapper; // Mock ObjectMapper
-     * 
-     * @InjectMocks
-     * private ActivityService activityService; // Inject mocks into ActivityService
-     * 
-     * @BeforeEach
-     * void setup() {
-     * // No additional initialization needed as we're using @InjectMocks
-     * }
-     */
 
+public class ActivityServiceTest {
+ 
     private ActivityService activityService;
     private ObjectMapper objectMapper;
 
@@ -91,16 +78,27 @@ public class ActivityServiceTest {
 
         List<Activity> activities = activityService.readActivitiesFromFile(testFile.getPath());
         assertEquals(2, activities.size(), "there should be 2 activities now");
-
         // check that both old and new activity is there
         assertTrue(activities.stream().anyMatch(a -> "test".equals(a.getActivityName())));
         assertTrue(activities.stream().anyMatch(a -> "saveTest".equals((a.getActivityName()))));
 
     }
-
-    /*
+}
+   /* 
      * @SuppressWarnings("unchecked")
+     *    /*
+     * @Mock
+     * private ObjectMapper objectMapper; // Mock ObjectMapper
      * 
+     * @InjectMocks
+     * private ActivityService activityService; // Inject mocks into ActivityService
+     * 
+     * @BeforeEach
+     * void setup() {
+     * // No additional initialization needed as we're using @InjectMocks
+     * }
+     
+/*
      * @Test
      * void testSaveActivity() throws IOException {
      * Activity activity = new Activity();
@@ -125,4 +123,4 @@ public class ActivityServiceTest {
      * }
      */
 
-}
+
