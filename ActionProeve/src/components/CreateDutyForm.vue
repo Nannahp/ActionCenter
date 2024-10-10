@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import BaseInput from '@/components/BaseInput.vue';
+import {computed, ref} from 'vue';
 import BaseButton from './BaseButton.vue';
 import axios from 'axios';
 import SelectDates from "@/components/SelectDates.vue";
+
+const props = defineProps<{
+  currentSelectedDay: Date | null; // Add this prop to receive the day
+}>();
 
 // Emit event to parent component
 const emit = defineEmits(['close', 'duty-schedule-added']);
@@ -17,7 +20,6 @@ const selectedDays = ref([]); // Array to hold selected days as Date objects
 const employees = ref([]); // This will be populated with employee data
 const submitted = ref(false);
 
-// Fetch employee data (this could also come from props)
 async function fetchEmployees() {
   try {
     const response = await axios.get('http://localhost:8080/api/employee');
@@ -33,6 +35,25 @@ fetchEmployees();
 function nextSlide() {
   currentSlide.value += 1;
 }
+
+const formStartTime = ref('10:00'); // Default start time
+const formEndTime = ref('20:00');   // Default end time
+
+// Function to determine if the selected day is a weekend
+const isWeekend = (day: Date) => {
+  const dayOfWeek = day.getDay();
+  return dayOfWeek === 0 || dayOfWeek === 6; // 0 = Sunday, 6 = Saturday
+};
+
+// Computed property for allowed start times based on the selected day
+const allowedHours = computed(() => {
+  if (!props.currentSelectedDay) return [];
+  return isWeekend(props.currentSelectedDay)
+      ? ['12', '13', '14', '15', '16', '17', '18', '19', '20']
+      : ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+});
+
+const allowedMinutes = ['00'];
 
 async function handleSubmit() {
   console.log("Submitting duty schedule for: ", selectedEmployee.value);
@@ -82,8 +103,12 @@ function resetForm() {
 
 // Handle selected days from the calendar
 function handleDaySelected(day: Date) {
-  console.log("Selected day: ", day); // Add this line
-  // Convert the incoming day to a string representation of the date
+  formStartTime.value = ''; // Reset time selection when day changes
+  formEndTime.value = '';
+
+  // Reset start time based on day selected
+  startTime.value = isWeekend(day) ? '12:00' : '10:00'; // Automatically set start time based on selected day
+  console.log("Selected day: ", day);
   const dayString = day.toDateString();
 
   // Check if the selected day is already in the list
@@ -115,28 +140,27 @@ function handleDaySelected(day: Date) {
               {{ employee.name }}
             </option>
           </select>
+          <!-- Start time select -->
+          <label for="formStartTime">Start Time:</label>
+          <select v-model="formStartTime" required>
+            <option value="" disabled>Select Start Time</option>
+            <template v-for="hour in allowedHours" :key="hour">
+              <option v-for="minute in allowedMinutes" :key="`${hour}:${minute}`" :value="`${hour}:${minute}`">
+                {{ hour }}:{{ minute }}
+              </option>
+            </template>
+          </select>
 
-          <BaseInput
-              id="startTime"
-              name="startTime"
-              v-model="startTime"
-              placeholder="Enter start time (hh:mm)"
-              required
-              class="small-input"
-              labelText="Start Time:"
-              labelFor="startTime"
-          />
-
-          <BaseInput
-              id="endTime"
-              name="endTime"
-              v-model="endTime"
-              placeholder="Enter end time (hh:mm)"
-              required
-              class="small-input"
-              labelText="End Time:"
-              labelFor="endTime"
-          />
+          <!-- End time select -->
+          <label for="formEndTime">End Time:</label>
+          <select v-model="formEndTime" required>
+            <option value="" disabled>Select End Time</option>
+            <template v-for="hour in allowedHours" :key="hour">
+              <option v-for="minute in allowedMinutes" :key="`${hour}:${minute}`" :value="`${hour}:${minute}`">
+                {{ hour }}:{{ minute }}
+              </option>
+            </template>
+          </select>
         </div>
         <div class="button-wrapper">
           <BaseButton text="Next" type="submit" />
@@ -189,6 +213,18 @@ form {
   transform: translate(-50%, -50%); /* Center the form */
   z-index: 20; /* Ensure it appears above other content */
 }
+
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  color: grey;
+}
+
+
 .input {
   height: 18em;
   align-content: center;
