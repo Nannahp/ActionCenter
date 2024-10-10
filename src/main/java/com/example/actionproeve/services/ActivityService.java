@@ -19,24 +19,27 @@ public class ActivityService {
     public ActivityService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
-
-    public void saveActivity(Activity activity, String filePath) {
+    //Sletter String filePath i parameteren TODO
+    public void saveActivity(Activity activity) {
         System.out.println("reached service");
         try {
-            List<Activity> activities = readActivitiesFromFile(filePath);
+            //Sletter filePath i parameteren TODO
+            List<Activity> activities = readActivitiesFromFile();
             activities.add(activity);
+            //Sletter filePath i parameteren TODO
             //Denne havde ikke filepath før
-            writeActivitiesToFile(activities, filePath);
+            writeActivitiesToFile(activities);
         } catch (IOException e) {
             e.printStackTrace(); // Improved error handling
         }
     }
 
-    public List<Activity> readActivitiesFromFile(String filePath) throws IOException {
+    public List<Activity> readActivitiesFromFile() throws IOException {
         System.out.println("reached readactitivies");
 
+        //Sletter filePath i parameteren TODO
         // før JSON_FILE_PATH i stedet for filepath
-        File file = new File(filePath);
+        File file = new File(JSON_FILE_PATH);
         if (file.exists() && file.length() > 0) {
             // Use TypeReference to read the JSON file into a List<Activity>
             List<Activity> activities = objectMapper.readValue(file, new TypeReference<List<Activity>>() {
@@ -47,10 +50,12 @@ public class ActivityService {
 
     }
 
-    private void writeActivitiesToFile(List<Activity> activities, String filePath) {
+    //Sletter String filePath i parameteren TODO
+    private void writeActivitiesToFile(List<Activity> activities) {
         System.out.println("reached writeActivities");
         try {
-            objectMapper.writeValue(new File(filePath), activities);
+            //Sletter filePath i parameteren TODO og tilføjet JSON_FILE_PATH
+            objectMapper.writeValue(new File(JSON_FILE_PATH), activities);
         } catch (IOException e) {
             e.printStackTrace(); // Improved error handling
         }

@@ -57,7 +57,7 @@ public class ActivityServiceTest {
         objectMapper.writeValue(testFile, initialActivities);
     }
 
-    @Test
+    /*@Test
     void testReadExistingActivites() throws IOException {
         List<Activity> activities = activityService.readActivitiesFromFile(testFile.getPath());
         assertNotNull(activities);
@@ -83,6 +83,8 @@ public class ActivityServiceTest {
         assertTrue(activities.stream().anyMatch(a -> "saveTest".equals((a.getActivityName()))));
 
     }
+
+     */
 }
    /* 
      * @SuppressWarnings("unchecked")

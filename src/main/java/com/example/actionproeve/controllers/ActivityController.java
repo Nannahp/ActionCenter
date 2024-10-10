@@ -33,6 +33,7 @@ public class ActivityController {
 
     @GetMapping("/activities")
     public ResponseEntity<List<Activity>> getActivities() throws IOException {
+        //Sletter filePath i parameteren TODO
         List<Activity> activities = activityService.readActivitiesFromFile();
         return ResponseEntity.ok(activities);
     }
@@ -43,8 +44,13 @@ public class ActivityController {
         System.out.println(activity.getActivityName());
         System.out.println(activity.getInformation());
         System.out.println("Received activity: " + activity);
-        activityService.saveActivity(activity,
+
+        //TODO filstien behøves ikke her, da service allerede gemmer.
+        activityService.saveActivity(activity);
+       /* activityService.saveActivity(activity,
                 "src\\main\\resources\\static\\assets\\activities.json");
+
+        */
 
         return ResponseEntity.ok().build();
 
