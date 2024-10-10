@@ -78,8 +78,6 @@ onMounted(async () => {
 @media (min-width: 1024px) {
   header {
     display: flex;
-
-
     place-items: center;
     width: 100%;
   }
