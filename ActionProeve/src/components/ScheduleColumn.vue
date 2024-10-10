@@ -74,7 +74,7 @@ function closeModal() {
         {{ formatTime(duty.date, duty.startTime) }} -
         {{ formatTime(duty.date, duty.endTime) }}
         <br />
-        {{ employeeName }}
+        {{ employeeName || 'Unknown Employee'}}
       </div>
     </div>
   </div>

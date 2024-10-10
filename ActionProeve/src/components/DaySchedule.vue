@@ -4,6 +4,7 @@ import TimetableColumn from "@/components/TimetableColumn.vue";
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import ScheduleColumn from "@/components/ScheduleColumn.vue";
+import CreateDutyForm from "@/components/CreateDutyForm.vue";
 
 const startHour = 10;
 const endHour = 20;
@@ -13,6 +14,8 @@ const weekendEndHour = 20;
 
 const duties = ref<any[]>([]);
 const employeeNames = ref<string[]>([]);
+const isCreateDutyFormVisible = ref(false);
+
 
 const props = defineProps<{
   day: Date | null;
@@ -58,9 +61,27 @@ function isWeekend(day: Date | null): boolean {
 }
 
 onMounted(async () => {
+  await fetchDutySchedules();
+});
+
+function closeDayView() {
+  isCreateDutyFormVisible.value = false; // Hide the CreateDutyForm when closing the day view
+  emit('close-day-view');
+}
+
+function showCreateDutyForm() {
+  isCreateDutyFormVisible.value = true; // Show the CreateDutyForm
+}
+
+function handleDutyScheduleAdded() {
+  // Re-fetch the duty schedules for the specific day
+  fetchDutySchedules();
+}
+
+async function fetchDutySchedules() {
   if (props.day !== null) {
     const dayYear = props.day.getFullYear();
-    const dayMonth = props.day.getMonth() + 1; //+1 to convert to 1-based month
+    const dayMonth = props.day.getMonth() + 1; // +1 to convert to 1-based month
     const dayDate = props.day.getDate();
 
     const formattedDate = `${dayYear}-${String(dayMonth).padStart(2, '0')}-${String(dayDate).padStart(2, '0')}`;
@@ -74,15 +95,11 @@ onMounted(async () => {
 
       employeeNames.value = [...new Set(duties.value.map(d => d.employeeName))];
     } catch (error) {
-      console.error('Error fetching employeeName:', error);
+      console.error('Error fetching duty schedules:', error);
     }
   }
-});
-
-
-function closeDayView() {
-  emit('close-day-view');
 }
+
 
 function filteredDuties(employee: string) {
   return duties.value.filter(duty => duty.employeeName === employee);
@@ -95,6 +112,19 @@ function isFutureOrToday(day: Date | null) {
   today.setHours(0, 0, 0, 0); // Remove time for accurate comparison
   return day.getTime() >= today.getTime(); // Returns true if the day is today or in the future
 }
+
+const formVisible = ref(false); // Initially set to false
+
+const openForm = (value: string) => {
+  showCreateDutyForm();
+  formVisible.value = true;
+  (document.querySelector('.month-view') as HTMLElement).classList.add('blurred');
+};
+
+const closeForm = () => {
+  formVisible.value = false;
+  (document.querySelector('.month-view') as HTMLElement).classList.remove('blurred');
+};
 </script>
 
 <template>
@@ -134,8 +164,14 @@ function isFutureOrToday(day: Date | null) {
           text="Add duty"
           type="button"
           class="create-booking-btn"
-          @click="closeDayView"
+          @click="openForm"
       />
+      <CreateDutyForm
+          v-if="isCreateDutyFormVisible"
+          @close="isCreateDutyFormVisible = false"
+          @duty-schedule-added="handleDutyScheduleAdded"
+      />
+      <div v-if="isCreateDutyFormVisible" class="overlay" @close="closeForm"></div>
     </div>
   </transition>
 </template>
@@ -219,5 +255,16 @@ function isFutureOrToday(day: Date | null) {
 .schedule-columns {
   display: flex;
   flex-grow: 1;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 9;
 }
 </style>

@@ -27,10 +27,5 @@ public class DutyScheduleService {
         return dutyScheduleRepository.save(dutySchedule);
     }
 
-    private String getEmployeeNameById(Long employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        return employee != null ? employee.getName() : null; // Return employee name or null if not found
-    }
-
 
 }

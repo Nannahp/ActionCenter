@@ -74,4 +74,9 @@ public class DutySchedule {
     public String getEmployeeName() {
         return employee != null ? employee.getName() : null;
     }
+
+    @Transient // Use this to prevent JPA from mapping this field to a database column
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 }
