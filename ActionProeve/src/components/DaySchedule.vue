@@ -170,7 +170,6 @@ const closeForm = () => {
           v-if="isCreateDutyFormVisible"
           @close="isCreateDutyFormVisible = false"
           @duty-schedule-added="handleDutyScheduleAdded"
-          :current-selected-day="day"
       />
       <div v-if="isCreateDutyFormVisible" class="overlay" @close="closeForm"></div>
     </div>
