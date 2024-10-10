@@ -151,8 +151,8 @@ function selectDay(day: Date) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 88vw;
-  height: 88vh;
+  width: 80vw;
+  height: 80vh;
   padding: 20px;
   box-sizing: border-box;
 }

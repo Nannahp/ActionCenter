@@ -91,62 +91,60 @@ function isFutureOrToday(day: Date | null) {
 </script>
 
 <template>
-  <transition name="slide">
-    <div v-if="isVisible" class="day-view">
-      <BaseButton text="✖" type="button" class="close-button" @click="closeDayView" />
-      <h2 class="centered-date">{{ day?.toDateString() }}</h2>
-      <div class="activity-header">
-        <div
+  <div v-if="isVisible" class="day-view">
+    <BaseButton text="✖" type="button" class="close-button" @click="closeDayView" />
+    <h2 class="centered-date">{{ day?.toDateString() }}</h2>
+    <div class="activity-header">
+      <div
+          v-for="activity in uniqueActivities"
+          :key="activity"
+          class="activity-name"
+      >
+        <h3 class="activity-name-text">{{ activity }}</h3>
+      </div>
+    </div>
+    <div class="day-grid">
+      <!-- Timetable Column -->
+      <TimetableColumn
+          :startHour="isWeekend(day) ? weekendStartHour : startHour"
+          :endHour="isWeekend(day) ? weekendEndHour : endHour"
+      />
+      <!-- Activity Columns -->
+      <div class="activity-columns">
+        <ActivityColumn
             v-for="activity in uniqueActivities"
             :key="activity"
-            class="activity-name"
-        >
-          <h3>{{ activity }}</h3>
-        </div>
-      </div>
-      <div class="day-grid">
-        <!-- Timetable Column -->
-        <TimetableColumn
-            :startHour="isWeekend(day) ? weekendStartHour : startHour"
-            :endHour="isWeekend(day) ? weekendEndHour : endHour"
+            :activityName="activity"
+            :bookings="filteredBookings(activity)"
+            :activityColor="activityColors[activity]"
+            :day="day"
         />
-        <!-- Activity Columns -->
-        <div class="activity-columns">
-          <ActivityColumn
-              v-for="activity in uniqueActivities"
-              :key="activity"
-              :activityName="activity"
-              :bookings="filteredBookings(activity)"
-              :activityColor="activityColors[activity]"
-              :day="day"
-          />
-        </div>
       </div>
-      <BaseButton
-          v-if="isFutureOrToday(day)"
-          text="Create Booking"
-          type="button"
-          class="create-booking-btn"
-          @click="closeDayView"
-      />
     </div>
-  </transition>
+    <BaseButton
+        v-if="isFutureOrToday(day)"
+        text="Create Booking"
+        type="button"
+        class="create-booking-btn"
+        @click="closeDayView"
+    />
+  </div>
 </template>
 
 <style scoped>
 .day-view {
-  width: 60%;
+  width: 70%;
   padding: 20px;
   background: #f0f0f0;
   border-left: 1px solid #ccc;
   border-radius: 10px;
-  position: absolute;
   right: 0;
   top: 0;
-  height: 100%;
   z-index: 10;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  height: 100vh;
 }
 
 .close-button {
@@ -181,13 +179,27 @@ function isFutureOrToday(day: Date | null) {
 .activity-header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin-bottom: 10px;
+  margin-left: 50px;
 }
 
 .activity-name {
-  font-weight: bold;
-  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1; /* Equal space for each column */
 }
+
+.activity-name-text {
+  overflow: hidden;
+  text-overflow: ellipsis; /* Show ellipsis if text overflows */
+  white-space: normal;
+  display: block;
+  max-width: 100px;
+  text-align: center;
+}
+
 
 .day-grid {
   display: grid;
