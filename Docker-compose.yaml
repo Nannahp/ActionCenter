@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: adventure
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin123
+    volumes:
+      - db_data:/var/lib/mysql:rw
+    ports:
+      - "127.0.0.1:3307:3306" # Access DB from host at this port
+
+  todo-backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - "127.0.0.1:8080:8080" # Expose backend on host
+    volumes:
+      - ./application-docker.properties:/app/application.properties:ro
+    environment:
+      SPRING_CONFIG_LOCATION: file:/app/application.properties
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/adventure
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
+
+  todo-frontend:
+    build:
+      context: ./ActionProeve
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "127.0.0.1:8081:8081"
+
+volumes:
+  db_data:
