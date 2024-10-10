@@ -28,7 +28,7 @@ const applyStyles = () => {
   if (isHomePage) {
     loadStylesheet('/src/assets/indexMain.css');  // Ensure the path is correct
   } else {
-    loadStylesheet('/src/assets/main.css');  // Ensure the path is correct
+    loadStylesheet('/src/assets/base.css');  // Ensure the path is correct
   }
 };
 

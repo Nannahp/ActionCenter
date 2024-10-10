@@ -1,28 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DayCalender from "@/components/DayCalender.vue";
 import MonthCalender from "@/components/MonthCalender.vue";
 import CreateActivityForm from "@/components/CreateActivityForm.vue";
 import TestHeader from ".././components/TestHeader.vue";
+import DaySchedule from "@/components/DaySchedule.vue";
+import type {DutySchedule} from "../models/DutySchedule";
 
-
-
-//Placeholder for bookings
-interface Event {
-  title: string;
-  startTime: string;
-  endTime: string;
-}
 
 //Define refs for the selected day and events
 const selectedDay = ref<Date | null>(null);
-const selectedDayEvents = ref<Event[]>([]);
+const selectedDayEvents = ref<DutySchedule[]>([]);
 const isDayViewVisible = ref(false);
 
 //Methods to show and close the day view
 function showDayView(day: Date) {
   selectedDay.value = day;
-  selectedDayEvents.value = []; // Fetch events for the selected day if needed
+  selectedDayEvents.value = []; // Fetch schedule for the selected day if needed
   isDayViewVisible.value = true;
   (document.querySelector('.month-view') as HTMLElement).classList.add('blurred');
 }
@@ -32,8 +25,7 @@ function closeDayView() {
   (document.querySelector('.month-view') as HTMLElement).classList.remove('blurred');
 }
 
-//Add-activities things: 
-// Reactive reference for form visibility
+//Reactive reference for form visibility
 const formVisible = ref(false); // Initially set to false
 
 // Handle dropdown selection
@@ -69,7 +61,7 @@ const closeForm = () => {
     </div>
 
     <!-- Day Calendar -->
-    <DayCalender
+    <DaySchedule
         v-if="isDayViewVisible"
         :day="selectedDay"
         :events="selectedDayEvents"
@@ -130,5 +122,4 @@ template {
   display: flex;
   flex-direction: column;
 }
-
 </style>

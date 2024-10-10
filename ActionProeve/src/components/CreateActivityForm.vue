@@ -137,7 +137,7 @@ function resetForm() {
   </form>
 </template>
 <style scoped>
-@import '@/assets/main.css';
+@import '@/assets/base.css';
 /* Center the form on the page and set a fixed height */
 form {
   width: 40em;

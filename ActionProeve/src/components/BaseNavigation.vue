@@ -116,15 +116,14 @@ export default defineComponent({
 }
 
 .dropdown-button {
-  padding: 10px;
+  padding: 14px;
   color: #f9f9f9;
-  background-color: #e83a00;
+  background-color: #2b2d30;
   cursor: pointer;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 16px;
   text-decoration: none;
   display: inline-block;
-  /*margin-left: -20px;*/
-  font-family: SansSerif,serif;
+  font-family: sans-serif;
 }
 </style>

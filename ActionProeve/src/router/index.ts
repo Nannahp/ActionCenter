@@ -3,6 +3,8 @@ import HomePageView from '@/views/HomePageView.vue'
 import TestDatabaseView from '@/views/TestDatabaseView.vue'
 import CalenderView from "@/views/CalenderView.vue";
 import Testview from '@/views/test-view.vue'
+import ScheduleView from "@/views/ScheduleView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +28,11 @@ const router = createRouter({
     path: '/add-activity',
       name: 'add-activity',
       component: Testview
+    },
+    {
+      path: '/schedule',
+      name: 'schedule',
+      component: ScheduleView
     }
   ]
 })
