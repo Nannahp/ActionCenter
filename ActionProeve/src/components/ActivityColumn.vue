@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
-import type {Booking} from "@/models/Booking";
+import type {Booking} from "@/models/BookingVue";
 import BookingDetails from '@/components/BookingDetails.vue';
 import {ref} from "vue";
 
@@ -9,6 +9,7 @@ const props = defineProps<{
   bookings: Booking[];
   activityColor: string;
   day: Date | null;
+  isAdmin: boolean;
 }>();
 
 const selectedBooking = ref<Booking | null>(null);
@@ -83,6 +84,7 @@ function closeModal() {
         :isVisible="isModalVisible"
         :booking="selectedBooking"
         :day="props.day"
+        :is-admin="isAdmin"
         @close="closeModal"
     />
   </div>

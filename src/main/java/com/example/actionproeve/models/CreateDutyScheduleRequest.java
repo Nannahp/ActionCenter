@@ -3,6 +3,7 @@ package com.example.actionproeve.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+//Same princip as a DTO
 public class CreateDutyScheduleRequest {
     private Long employeeId;
     private LocalDate date;

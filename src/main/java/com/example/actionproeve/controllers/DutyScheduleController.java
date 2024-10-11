@@ -5,6 +5,7 @@ import com.example.actionproeve.models.DutySchedule;
 import com.example.actionproeve.models.Employee;
 import com.example.actionproeve.services.DutyScheduleService;
 import com.example.actionproeve.services.EmployeeService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,20 @@ public class DutyScheduleController {
         }
 
         return new ResponseEntity<>(savedSchedules, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteDutySchedule(@RequestParam Long id) {
+        dutyScheduleService.deleteDutySchedule(id);
+        return ResponseEntity.ok().body("Duty schedule deleted successfully");
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<DutySchedule>> getDutySchedulesForLoggedInUser() {
+        List<DutySchedule> dutySchedules = dutyScheduleService.getAllDuties();
+        dutySchedules.forEach(duty -> {
+        });
+        return ResponseEntity.ok(dutySchedules);
     }
 
 }

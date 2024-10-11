@@ -20,6 +20,7 @@ const isCreateDutyFormVisible = ref(false);
 const props = defineProps<{
   day: Date | null;
   isVisible: boolean;
+  isAdmin: boolean;
 }>();
 
 const emit = defineEmits(['close-day-view']);
@@ -156,11 +157,12 @@ const closeForm = () => {
             :employee-color="employeeColors[employee] || 'light-grey'"
             :day="day"
             :duties="filteredDuties(employee)"
+            :is-admin="isAdmin"
           />
         </div>
       </div>
       <BaseButton
-          v-if="isFutureOrToday(day)"
+          v-if="isFutureOrToday(day) && isAdmin"
           text="Add duty"
           type="button"
           class="create-booking-btn"

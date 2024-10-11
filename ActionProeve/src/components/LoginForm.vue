@@ -2,84 +2,110 @@
 import { ref } from 'vue'
 import BaseInput from './BaseInput.vue'
 import BaseButton from './BaseButton.vue'
+import axios from "axios";
 
 defineProps<{}>()
 
-// Vi har ikke brug for gender i denne component men det var for at teste
 // baseInput med type option hehe
-const password = ref(''); //tilføjet denne. Sorry
+const password = ref('');
 const username = ref('')
-const gender = ref('')
+const errorMessage = ref('');
 
-function handleSubmit() {
-  console.log('Username:', username.value)
-  console.log('Gender:', gender.value)
+
+async function handleSubmit() {
+  errorMessage.value = ''; // Clear previous error message
+  try {
+    const response = await axios.post('http://localhost:8080/api/login/auth', {
+      username: username.value,
+      password: password.value
+    }, {
+      withCredentials: true //allows to send session cookies to the backend
+    });
+
+    // Store the username and admin status in localStorage
+    localStorage.setItem('username', response.data.username);
+    localStorage.setItem('isAdmin', String(response.data.isAdmin));
+
+    //Reload or redirect to the main page
+    window.location.reload();
+  } catch (error) {
+    console.log('Login failed:', error);
+    errorMessage.value = 'Username or password incorrect';
+  }
 }
+
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
-    <BaseInput
-      id="username"
-      name="username"
-      labelFor="username"
-      labelText="Username"
-      placeholder="JohnDie"
-      v-model="username"
-      required
-    />
+  <div class="form-container">
+    <form @submit.prevent="handleSubmit">
+      <BaseInput
+          id="username"
+          name="username"
+          labelFor="username"
+          labelText="Username"
+          placeholder="marioMe"
+          v-model="username"
+          required
+      />
 
-    <BaseInput
-      id="password"
-      name="password"
-      type="password"
-      labelFor="password"
-      labelText="Password"
-      placeholder="pissword"
-      v-model="password"
-      required
-    />
+      <BaseInput
+          id="password"
+          name="password"
+          type="password"
+          labelFor="password"
+          labelText="Password"
+          placeholder="passWord"
+          v-model="password"
+          required
+      />
 
-    <BaseInput
-      id="gender"
-      name="gender"
-      labelFor="gender"
-      labelText="Gender"
-      type="select"
-      v-model="gender"
-      :options="[
-        { label: 'Male', value: 'male' },
-        { label: 'Female', value: 'female' },
-        { label: 'Other', value: 'other' }
-      ]"
-      required
-    />
-    <BaseButton type="submit" text="Submit" />
-  </form>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+      <BaseButton type="submit" text="Submit" @click="handleSubmit"/>
+    </form>
+  </div>
 </template>
 
+
 <style scoped>
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  max-width: 300px;
-  margin: 0 auto;
-  padding: 1rem;
+  max-width: 350px;
+  width: 100%;
+  padding: 2rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
 }
 
 button {
-  padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #0056b3;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+  width: 90px;
+  height: 45px;
+  align-self: center;
+  margin-top: 10px;
 }
 
-button:hover {
-  background-color: #0056b3;
+.error-message {
+  color: red; /* Style for the error message */
+  text-align: center; /* Center the error message */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
 }
+
 </style>

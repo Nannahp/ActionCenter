@@ -11,7 +11,7 @@
             labelText="Activity:"
             placeholder="Please select an activity"
             :options="activities"
-            v-model="booking.activityName"
+            v-model="bookingVue.activityName"
             required
         />
 
@@ -30,7 +30,7 @@
           labelFor="customerName"
           labelText="Name:"
           placeholder="John Doe"
-          v-model="booking.customerName"
+          v-model="bookingVue.customerName"
           required
       />
 
@@ -40,12 +40,12 @@
           labelFor="email"
           labelText="Email:"
           placeholder="Johndoe@gmail.com"
-          v-model="booking.email"
+          v-model="bookingVue.email"
           required
       />
 
         <div>
-        <input type="hidden" id="employee" v-model="booking.employee" required />
+        <input type="hidden" id="employee" v-model="bookingVue.employee" required />
         </div>
 
         <BaseInput
@@ -55,7 +55,7 @@
           labelText="Date:"
           placeholder=""
           type="date"
-          v-model="booking.date"
+          v-model="bookingVue.date"
           required
       />
 
@@ -66,7 +66,7 @@
           labelText="Start time:"
           placeholder="12:00"
           type="time"
-          v-model="booking.startTime"
+          v-model="bookingVue.startTime"
           required
       />
 
@@ -77,7 +77,7 @@
           labelText="end time:"
           placeholder="18:00"
           type="time"
-          v-model="booking.endTime"
+          v-model="bookingVue.endTime"
           required
       />
 
@@ -111,24 +111,24 @@ onMounted(async () => {
 
 const emit = defineEmits(['close-form']);
 
-let booking = ref({
+let bookingVue = ref({
   date: '',
   startTime: '',
   endTime: '',
   activityName: '',
   customerName: '',
   email: '',
-  employeeId: 1, //just for testing
+  employee: 1, //just for testing
 });
 
 async function submitBooking() {
-  console.log("Booking submitted:", booking.value);
+  console.log("Booking submitted:", bookingVue.value);
   try {
-    const response = await axios.post('http://localhost:8080/api/bookings/createBooking', booking.value);
+    const response = await axios.post('http://localhost:8080/api/bookings/createBooking', bookingVue.value);
     console.log("Response:", response.data);
 
     // If the submission is successful, update status and clear the form
-    booking.value = resetBookingForm(); // Reset the form after successful submission
+    bookingVue.value = resetBookingForm(); // Reset the form after successful submission
 
     closeForm(); // Close the form after successful submission
   } catch (error) {
@@ -145,7 +145,7 @@ function resetBookingForm() {
     activityName: '',
     customerName: '',
     email: '',
-    employeeId: '',
+    employee: 1,
   };
 }
 

@@ -24,7 +24,7 @@ public class DutySchedule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    @JsonIgnoreProperties({"username", "password", "admin", "bookings"})  // Exclude sensitive fields
+    @JsonIgnoreProperties({"password", "admin", "bookings"})  // Exclude sensitive fields
     private Employee employee;
 
 
@@ -79,4 +79,11 @@ public class DutySchedule {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
+    // Transient method to get the employee username
+    @Transient
+    public String getEmployeeUsername() {
+        return employee != null ? employee.getUsername() : null;
+    }
+
 }
