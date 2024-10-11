@@ -2,24 +2,31 @@
 
 import { defineComponent } from 'vue'
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
+import WelcomeImage from '../assets/Welcome.png'
 
 import 'vue3-carousel/dist/carousel.css'
 
 // Array af billed-URL'er
 const slides = [
-  { id: 1, image: 'https://img.freepik.com/premium-photo/gokart-racing-scenic-outdoor-track-daylight_922936-41831.jpg?w=1800', text: 'Race with Go Karts!' },
-  { id: 2, image: 'https://img.freepik.com/premium-photo/capture-chaos-closequarters-paintball-battle-indoor-arena_1308549-18552.jpg?w=1380', text: 'Shoot your Boss!' },
-  { id: 3, image: 'https://via.placeholder.com/800x400?text=Image+3', text: 'Tackle your boyfriend!' },
-  { id: 4, image: 'https://via.placeholder.com/800x400?text=Image+4', text: 'Fourth Slide Text' },
+  { id: 1, image: WelcomeImage, text: 'Welcome!', subtitle: 'Enjoy your time with Go Karts and more fun activities!' },
+  { id: 2, image: 'https://img.freepik.com/premium-photo/gokart-racing-scenic-outdoor-track-daylight_922936-41831.jpg?w=1800', text: 'Real life Mario Kart!', subtitle: '' },
+  { id: 3, image: 'https://img.freepik.com/premium-photo/capture-chaos-closequarters-paintball-battle-indoor-arena_1308549-18552.jpg?w=1380', text: 'Shoot your Boss!', subtitle: '' },
+  { id: 4, image: 'https://via.placeholder.com/800x400?text=Image+3', text: 'Tackle your boyfriend!', subtitle: '' },
+  { id: 5, image: 'https://via.placeholder.com/800x400?text=Image+4', text: 'Fourth Slide Text', subtitle: '' },
 ];
 
 </script>
+
 <template>
   <Carousel>
     <Slide v-for="slide in slides" :key="slide.id">
       <div class="carousel_item">
-        <img :src="slide.image" class="carousel_image"/>
-        <div class="carousel_text">{{ slide.text }}</div>
+        <img :src="slide.image" class="carousel_image" />
+        <div class="carousel_text">
+          <!-- Brug text som title -->
+          <h1>{{ slide.text }}</h1>
+          <p v-if="slide.subtitle" class="carousel_subtitle">{{ slide.subtitle }}</p>
+        </div>
       </div>
     </Slide>
 
@@ -42,25 +49,42 @@ const slides = [
 
 .carousel_image {
   width: 100%;
-  height: 800px;
+  height: 600px;
   border-radius: 8px;
   object-fit: cover;
 }
 
-.carousel_text {
-  letter-spacing: .10em;
+h1 {
   font-family: "Galada", cursive;
   font-weight: 400;
   font-style: italic;
+  letter-spacing: .10em;
+  font-size: 6rem;
+  color: var(--action-yellow);
+  padding:0;
+  margin:0;
+}
 
+.carousel_text {
   position: absolute;
   text-align: center;
-  color: var(--action-yellow);
-  font-size: 200px;
-  background-color: rgba(0, 0, 0, 0.3); /* Halvgennemsigtig baggrund */
-  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Halvgennemsigtig baggrund */
+ /* padding: 10px;
   border-radius: 5px;
+
+  */
+  width: 100%;
+  transform: translateY(-50%);
 }
+
+.carousel_subtitle {
+  font-family: "Andale Mono";
+  font-size: 1.7rem;
+  font-weight: bolder;
+  color: var(--action-red);
+  margin-bottom: 2rem;
+}
+
 
 .carousel_slide {
   padding: 10px;
@@ -68,9 +92,6 @@ const slides = [
 
 .carousel__prev,
 .carousel__next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   width: 50px;
   height: 50px;
   background-color: rgba(0, 0, 0, 0.5);

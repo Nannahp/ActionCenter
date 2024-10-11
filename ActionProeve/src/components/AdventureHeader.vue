@@ -10,10 +10,11 @@ export default defineComponent({
     ];
 
     const dropdownItems = [
-      { label: 'GoCart', value: 'gocart' },
-      { label: 'Sumo Wrestling', value: 'sumo' }
+      { label: 'GoCart', value: 'Go-kart'},
+      { label: 'Paintball', value: 'Paintball' },
+      { label: 'Sumo Wrestling', value: 'Sumo Wrestling' },
+      { label: 'Sumo Football', value: 'Sumo Football' }
     ];
-
     const isOpen = ref(false);
 
     const openDropdown = () => {
@@ -58,7 +59,12 @@ export default defineComponent({
           <a href="#" class="dropdown-button">{{ 'Activities' }}</a>
           <ul v-if="isOpen" class="dropdown-menu">
             <li v-for="dropdownItem in dropdownItems" :key="dropdownItem.label">
-              <a href="#" @click.prevent="handleDropdownSelect(dropdownItem.value)">{{ dropdownItem.label }}</a>
+              <a
+                  :href="'#' + dropdownItem.value"
+                  @click.prevent="handleDropdownSelect(dropdownItem.value)"
+              >
+                {{ dropdownItem.label }}
+              </a>
             </li>
           </ul>
         </li>
