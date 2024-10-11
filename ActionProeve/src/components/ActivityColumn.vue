@@ -9,6 +9,7 @@ const props = defineProps<{
   bookings: Booking[];
   activityColor: string;
   day: Date | null;
+  isAdmin: boolean;
 }>();
 
 const selectedBooking = ref<Booking | null>(null);
@@ -83,6 +84,7 @@ function closeModal() {
         :isVisible="isModalVisible"
         :booking="selectedBooking"
         :day="props.day"
+        :is-admin="isAdmin"
         @close="closeModal"
     />
   </div>

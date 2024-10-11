@@ -6,6 +6,7 @@ const props = defineProps<{
   isVisible: boolean;
   booking: Booking | null;
   day: Date | null;
+  isAdmin: boolean;
 }>()
 
 const emit = defineEmits(['close']);
@@ -40,7 +41,7 @@ function isFutureOrToday(day: Date | null) {
       <p><strong>End Time:</strong> {{ formatTime(booking.date, booking.endTime) }}</p>
       <p><strong>Email:</strong> {{ booking.email }}</p>
       <BaseButton
-          v-if="isFutureOrToday(day)"
+          v-if="isFutureOrToday(day) && isAdmin"
           text="Delete Booking"
           type="button"
           class="delete-booking-btn"
@@ -72,6 +73,7 @@ function isFutureOrToday(day: Date | null) {
   border-radius: 10px;
   max-width: 400px;
   width: 100%;
+  height: 300px;
   position: relative;
 }
 
@@ -99,13 +101,15 @@ function isFutureOrToday(day: Date | null) {
 h2 {
   text-align: center;
   color: #333333;
+  margin-bottom: 15px;
 }
 
 p {
   color: #333333;
+  margin-bottom: 8px;
 }
 
 strong {
-  color: var(--text-color-light);
+  color: #b3b3b3;
 }
 </style>

@@ -2,7 +2,7 @@
 import BaseButton from "@/components/BaseButton.vue";
 import TimetableColumn from "@/components/TimetableColumn.vue";
 import ActivityColumn from "@/components/ActivityColumn.vue";
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import axios from 'axios';
 import CreateBookingForm from "@/components/CreateBookingForm.vue";
 
@@ -19,6 +19,11 @@ const props = defineProps<{
   day: Date | null;
   isVisible: boolean;
 }>();
+
+// Fetch isAdmin from localStorage
+const isAdmin = computed(() => {
+  return localStorage.getItem('isAdmin') === 'true';
+});
 
 const emit = defineEmits(['close-day-view']);
 
@@ -91,8 +96,8 @@ function isFutureOrToday(day: Date | null) {
   if (!day) return false;
 
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // Remove time for accurate comparison
-  return day.getTime() >= today.getTime(); // Returns true if the day is today or in the future
+  today.setHours(0, 0, 0, 0);
+  return day.getTime() >= today.getTime();
 }
 </script>
 
@@ -124,12 +129,13 @@ function isFutureOrToday(day: Date | null) {
             :bookings="filteredBookings(activity)"
             :activityColor="activityColors[activity]"
             :day="day"
+            :is-admin="isAdmin"
         />
       </div>
     </div>
     <CreateBookingForm v-if="showCreateBookingForm" @close-form="showCreateBookingForm = false" />
     <BaseButton
-        v-if="isFutureOrToday(day)"
+        v-if="isFutureOrToday(day) && isAdmin"
         text="Create Booking"
         type="button"
         class="create-booking-btn"

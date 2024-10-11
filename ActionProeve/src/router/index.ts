@@ -20,16 +20,6 @@ const router = createRouter({
       component: CalenderView
     },
     {
-      path: '/test-database',
-      name: 'database',
-      component: TestDatabaseView
-    },
-    {
-    path: '/add-activity',
-      name: 'add-activity',
-      component: Testview
-    },
-    {
       path: '/schedule',
       name: 'schedule',
       component: ScheduleView

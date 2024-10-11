@@ -1,16 +1,57 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import MonthCalender from "@/components/MonthCalender.vue";
 import CreateActivityForm from "@/components/CreateActivityForm.vue";
 import TestHeader from ".././components/TestHeader.vue";
 import DaySchedule from "@/components/DaySchedule.vue";
 import type {DutySchedule} from "../models/DutySchedule";
+import axios from "axios";
+import LoginForm from "@/components/LoginForm.vue";
 
+interface LoginSessionData {
+  isAdmin: boolean;
+  sessionValid: boolean;
+}
 
 //Define refs for the selected day and events
 const selectedDay = ref<Date | null>(null);
 const selectedDayEvents = ref<DutySchedule[]>([]);
 const isDayViewVisible = ref(false);
+const isLoggedIn = ref(false);
+const isAdmin = ref(false);
+
+
+//Login stuff - the whole part is needed so it doesnt redirect to login form
+onMounted(async () => {
+  //Needed so the site doesnt lag when checking from backend
+  const savedLoginState = localStorage.getItem('isLoggedIn');
+  if (savedLoginState === 'true') {
+    isLoggedIn.value = true;
+
+    const adminState = localStorage.getItem('isAdmin');
+    isAdmin.value = adminState === 'true';
+  }
+
+  //Confirms the check and makes sure the session is valid and isAdmin is set
+  try {
+    const response = await axios.get('http://localhost:8080/api/login/check-session', {
+      withCredentials: true
+    });
+
+    handleLoginSuccess(response.data);
+  } catch (error) {
+    isLoggedIn.value = false;
+  }
+});
+
+function handleLoginSuccess(data: LoginSessionData) {
+  localStorage.setItem('isLoggedIn', 'true');
+  localStorage.setItem('isAdmin', String(data.isAdmin));
+  isLoggedIn.value = true;
+  isAdmin.value = Boolean(data.isAdmin);
+}
+
+
 
 //Methods to show and close the day view
 function showDayView(day: Date) {
@@ -44,34 +85,42 @@ const closeForm = () => {
 </script>
 
 <template>
-  <header>
-    <TestHeader @dropdown-select="handleDropdownSelect" />
-  </header>
-
-  <!-- Activity Form -->
-  <div v-if="formVisible" class="activity-form">
-    <CreateActivityForm @exitForm="closeForm" />
+  <!-- login -->
+  <div v-if="!isLoggedIn" class="login">
+    <LoginForm />
   </div>
 
-  <!-- Calendar Container -->
-  <div class="calendar-container">
-    <!-- Month Calendar -->
-    <div>
-      <MonthCalender @day-selected="showDayView" />
+  <div v-else>
+    <header>
+      <TestHeader @dropdown-select="handleDropdownSelect" />
+    </header>
+
+    <!-- Activity Form -->
+    <div v-if="formVisible" class="activity-form">
+      <CreateActivityForm @exitForm="closeForm" />
     </div>
 
-    <!-- Day Calendar -->
-    <DaySchedule
-        v-if="isDayViewVisible"
-        :day="selectedDay"
-        :events="selectedDayEvents"
-        :isVisible="isDayViewVisible"
-        @close-day-view="closeDayView"
-    />
+    <!-- Calendar Container -->
+    <div class="calendar-container">
+      <!-- Month Calendar -->
+      <div>
+        <MonthCalender @day-selected="showDayView" />
+      </div>
 
-    <!-- Overlay for Day View -->
-    <div v-if="isDayViewVisible" class="overlay" @click="closeDayView"></div>
-    <div v-if="formVisible" class="overlay" @click="closeForm"></div>
+      <!-- Day Calendar -->
+      <DaySchedule
+          v-if="isDayViewVisible"
+          :day="selectedDay"
+          :events="selectedDayEvents"
+          :isVisible="isDayViewVisible"
+          :is-admin="isAdmin"
+          @close-day-view="closeDayView"
+      />
+
+      <!-- Overlay for Day View -->
+      <div v-if="isDayViewVisible" class="overlay" @click="closeDayView"></div>
+      <div v-if="formVisible" class="overlay" @click="closeForm"></div>
+    </div>
   </div>
 </template>
 

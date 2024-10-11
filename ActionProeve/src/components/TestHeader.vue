@@ -4,6 +4,7 @@ import {defineComponent} from "vue";
 import BaseNavigation from "@/components/BaseNavigation.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import {useRoute, useRouter} from "vue-router";
+import axios from "axios";
 
 export default defineComponent({
   name: 'TestHeader',
@@ -44,13 +45,33 @@ export default defineComponent({
       }
     };
 
+    const handleLogout = async () => {
+      try {
+        await axios.post('http://localhost:8080/api/login/logout', {}, {
+          withCredentials: true
+        });
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('isAdmin');
+        await router.push('/');
+      } catch (error) {
+        console.error('Logout failed:', error);
+      }
+    };
+
+    //This can work as there is no redirection to any pages
+    const isAdmin = computed(() => {
+      return localStorage.getItem('isAdmin') === 'true';
+    });
+
     return {
       navItems,
       dropdownItems,
       handleDropdownSelect,
       formVisible,
       buttonText,
-      handleButtonClick
+      handleButtonClick,
+      handleLogout,
+      isAdmin
     };
   },
 });
@@ -64,6 +85,7 @@ export default defineComponent({
     </div>
     <div class="nav-section">
       <BaseNavigation
+          v-if="isAdmin"
           :navItems="navItems"
           dropdownLabel="Activities"
           :dropdownItems="dropdownItems"
@@ -77,7 +99,12 @@ export default defineComponent({
           @click="handleButtonClick"
       />
 
-      <BaseButton class="logout-button" text="Logout" type="button" />
+      <BaseButton
+          class="logout-button"
+          text="Logout"
+          type="button"
+          @click="handleLogout"
+      />
     </div>
   </header>
 </template>
