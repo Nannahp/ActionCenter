@@ -6,6 +6,10 @@ import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 //For emitting the selected day
 const emit = defineEmits(['day-selected'])
 
+const props = defineProps<{
+  dutyDays?: Date[]; // Prop for duty days optional in this way
+}>();
+
 const currentDate = ref(new Date())
 const currentMonth = ref(currentDate.value.getMonth())
 const currentYear = ref(currentDate.value.getFullYear())
@@ -105,6 +109,18 @@ function nextMonth() {
   }
 }
 
+// Function to check if a date is a duty day
+function isDutyDay(day: Date | null): boolean {
+  // If dutyDays is not provided, return false for all days
+  if (!props.dutyDays) return false;
+
+  return props.dutyDays.some(dutyDate =>
+      day && dutyDate.getDate() === day.getDate() &&
+      dutyDate.getMonth() === day.getMonth() &&
+      dutyDate.getFullYear() === day.getFullYear()
+  );
+}
+
 //Emit the selected day to the parent component
 function selectDay(day: Date) {
   emit('day-selected', day)
@@ -134,7 +150,7 @@ function selectDay(day: Date) {
           v-for="(day, dayIndex) in daysInMonth.slice(weekIndex * 7, (weekIndex + 1) * 7)"
           :key="dayIndex"
           class="calender-day"
-          :class="{ 'current-day': isToday(day), 'empty-day': day === null }"
+          :class="{ 'current-day': isToday(day), 'empty-day': day === null, 'duty-day': isDutyDay(day) }"
           @click="day && selectDay(day)"
         >
           <!-- Shows day number only if day is not null -->
@@ -223,5 +239,10 @@ button {
 
 button:hover {
   color: #0056b3;
+}
+
+.duty-day {
+  background-color: #bafcba; /* Light green background for duty days */
+  border: 2px solid #3d9933; /* Darker border for visibility */
 }
 </style>

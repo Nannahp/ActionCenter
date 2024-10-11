@@ -157,6 +157,7 @@ const closeForm = () => {
             :employee-color="employeeColors[employee] || 'light-grey'"
             :day="day"
             :duties="filteredDuties(employee)"
+            :is-admin="isAdmin"
           />
         </div>
       </div>

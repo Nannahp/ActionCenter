@@ -2,12 +2,14 @@
 import type { CSSProperties } from 'vue';
 import {ref} from "vue";
 import type {DutySchedule} from "../models/DutySchedule";
+import ScheduleDetails from "@/components/ScheduleDetails.vue";
 
 const props = defineProps<{
   employeeName: string;
   duties: DutySchedule[];
   employeeColor: string;
   day: Date | null;
+  isAdmin: boolean;
 }>();
 
 const selectedDuty = ref<DutySchedule | null>(null);
@@ -77,6 +79,14 @@ function closeModal() {
         {{ employeeName || 'Unknown Employee'}}
       </div>
     </div>
+
+    <ScheduleDetails
+        :isVisible="isModalVisible"
+        :duty-schedule="selectedDuty"
+        :day="props.day"
+        :is-admin="isAdmin"
+        @close="closeModal"
+    />
   </div>
 </template>
 

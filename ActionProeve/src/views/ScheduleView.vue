@@ -19,6 +19,10 @@ const selectedDayEvents = ref<DutySchedule[]>([]);
 const isDayViewVisible = ref(false);
 const isLoggedIn = ref(false);
 const isAdmin = ref(false);
+const allDuties = ref<any[]>([]);
+const duties = ref<DutySchedule[]>([]);
+
+
 
 
 //Login stuff - the whole part is needed so it doesnt redirect to login form
@@ -42,6 +46,21 @@ onMounted(async () => {
   } catch (error) {
     isLoggedIn.value = false;
   }
+
+  // Fetch only the duties for the logged-in user
+  try {
+    const { data } = await axios.get('http://localhost:8080/api/duty-schedules/all'); // Updated endpoint
+    allDuties.value = data; // Store all duties
+
+    // Filter duties for the logged-in user
+    const username = localStorage.getItem('username');
+    console.log('All Duties:', allDuties.value);
+    console.log('Username:', username);
+    duties.value = allDuties.value.filter(duty => duty.employeeUsername === username);
+  } catch (error) {
+    console.error('Error fetching duty schedules:', error);
+  }
+
 });
 
 function handleLoginSuccess(data: LoginSessionData) {
@@ -50,8 +69,6 @@ function handleLoginSuccess(data: LoginSessionData) {
   isLoggedIn.value = true;
   isAdmin.value = Boolean(data.isAdmin);
 }
-
-
 
 //Methods to show and close the day view
 function showDayView(day: Date) {
@@ -104,7 +121,7 @@ const closeForm = () => {
     <div class="calendar-container">
       <!-- Month Calendar -->
       <div>
-        <MonthCalender @day-selected="showDayView" />
+        <MonthCalender @day-selected="showDayView" :duty-days="duties.map(duty => new Date(duty.date))" />
       </div>
 
       <!-- Day Calendar -->

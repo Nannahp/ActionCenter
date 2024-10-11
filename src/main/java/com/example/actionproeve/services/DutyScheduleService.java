@@ -1,7 +1,6 @@
 package com.example.actionproeve.services;
 
 import com.example.actionproeve.models.DutySchedule;
-import com.example.actionproeve.models.Employee;
 import com.example.actionproeve.repositories.DutyScheduleRepository;
 import com.example.actionproeve.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +26,17 @@ public class DutyScheduleService {
         return dutyScheduleRepository.save(dutySchedule);
     }
 
+    public void deleteDutySchedule(Long id) {
+        dutyScheduleRepository.deleteById(id);
+    }
+
+
+    public List<DutySchedule> findByEmployeeUsername(String username) {
+        return dutyScheduleRepository.findByEmployee_Username(username);
+    }
+
+    public List<DutySchedule> getAllDuties() {
+        return dutyScheduleRepository.findAll();
+    }
 
 }
