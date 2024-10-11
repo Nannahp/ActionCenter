@@ -30,7 +30,26 @@ function isFutureOrToday(day: Date | null) {
 </script>
 
 <template>
+<!-- TODO -->
+  <!-- denne så typescript ikke brokker sig aka docker buld, mht. if booking is null -->
   <div v-if="isVisible" class="modal-overlay" @click.self="close">
+    <div class="modal-content">
+      <BaseButton text="✖" type="button" class="close-button" @click="close" />
+      <h2>Booking Details</h2>
+      <p v-if="booking"><strong>Activity:</strong> {{ booking.activityName }}</p>
+      <p v-if="booking"><strong>Customer:</strong> {{ booking.customerName }}</p>
+      <p v-if="booking"><strong>Date:</strong> {{ booking.date }}</p>
+      <p v-if="booking"><strong>Start Time:</strong> {{ formatTime(booking.date, booking.startTime) }}</p>
+      <p v-if="booking"><strong>End Time:</strong> {{ formatTime(booking.date, booking.endTime) }}</p>
+      <p v-if="booking"><strong>Email:</strong> {{ booking.email }}</p>
+      <BaseButton
+          v-if="isFutureOrToday(day)"
+          text="Delete Booking"
+          type="button"
+          class="delete-booking-btn"
+          @click="close"
+      />
+ <!-- <div v-if="isVisible" class="modal-overlay" @click.self="close">
     <div class="modal-content">
       <BaseButton text="✖" type="button" class="close-button" @click="close" />
       <h2>Booking Details</h2>
@@ -46,7 +65,7 @@ function isFutureOrToday(day: Date | null) {
           type="button"
           class="delete-booking-btn"
           @click="close"
-      />
+      /> -->
     </div>
   </div>
 </template>

@@ -5,23 +5,32 @@ import BaseButton from './BaseButton.vue';
 import axios from 'axios';
 import SelectDates from "@/components/SelectDates.vue";
 
+// TODO
+// Lavet så ts ikke brokker sig
+interface Employee {
+  id: number;
+  name: string;
+}
+
+
 // Emit event to parent component
 const emit = defineEmits(['close', 'duty-schedule-added']);
 
 // Reactive variables
-const currentSlide = ref(1);
-const selectedEmployee = ref('');
-const startTime = ref('');
-const endTime = ref('');
-const selectedDays = ref([]); // Array to hold selected days as Date objects
-const employees = ref([]); // This will be populated with employee data
-const submitted = ref(false);
+// TODO lavet så vi kan builde og ts ikke brokker sig.
+const currentSlide = ref<number>(1);
+const selectedEmployee = ref<number | null>(null);
+const startTime = ref<string>(''); // Ensure this is a string in HH:mm format
+const endTime = ref<string>(''); // Ensure this is a string in HH:mm format
+const selectedDays = ref<Date[]>([]);
+const employees = ref<{ id: number; name: string; }[]>([]);
+const submitted = ref<boolean>(false);
 
 // Fetch employee data (this could also come from props)
 async function fetchEmployees() {
   try {
-    const response = await axios.get('http://localhost:8080/api/employee');
-    employees.value = response.data;
+    // TODO har sat denne ind { id: number; name: string; }[]
+    const response = await axios.get<{ id: number; name: string; }[]>('http://localhost:8080/api/employee');    employees.value = response.data;
   } catch (error) {
     console.error("Error fetching employees: ", error);
   }
@@ -35,6 +44,12 @@ function nextSlide() {
 }
 
 async function handleSubmit() {
+// TODO tilføjet denne
+  if (!selectedEmployee.value || !startTime.value || !endTime.value || selectedDays.value.length === 0) {
+    console.error("Please fill in all required fields");
+    return;
+  }
+
   console.log("Submitting duty schedule for: ", selectedEmployee.value);
 
   // Prepare an array to hold the duty schedules
@@ -47,6 +62,7 @@ async function handleSubmit() {
         employeeId: selectedEmployee.value, // Use employee ID directly
         startTime: startTime.value,
         endTime: endTime.value,
+        //TODO disse havde typescript fejl tidligere.
         date: new Date(Date.UTC(day.getFullYear(), day.getMonth(), day.getDate())).toISOString().split('T')[0],
       };
 
@@ -73,7 +89,7 @@ function handleClose() {
 
 function resetForm() {
   currentSlide.value = 1;
-  selectedEmployee.value = '';
+  selectedEmployee.value = null; //TODO sat til null
   startTime.value = '';
   endTime.value = '';
   selectedDays.value = [];
