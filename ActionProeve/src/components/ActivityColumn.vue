@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
-import type {Booking} from "@/models/Booking";
+import type {Booking} from "@/models/BookingVue";
 import BookingDetails from '@/components/BookingDetails.vue';
 import {ref} from "vue";
 

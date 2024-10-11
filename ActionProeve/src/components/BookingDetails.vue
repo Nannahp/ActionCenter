@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Booking } from "../models/Booking";
+import type { Booking } from "../models/BookingVue";
 import BaseButton from "@/components/BaseButton.vue";
 
 const props = defineProps<{
