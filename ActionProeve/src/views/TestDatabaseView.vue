@@ -33,7 +33,7 @@
   import EmployeeService from '../services/EmployeeServices'; // Correct path to your service
   import BookingService from '.././services/BookingServices'; // Path to your BookingService
   import type { Employee } from '../models/Employee'; // Import the Employee interface
-  import type { Booking } from '../models/Booking'; // Import the Booking interface
+  import type { Booking } from '../models/BookingVue'; // Import the Booking interface
   
   const employees = ref<Employee[]>([]); // Ref to store employees
   const bookings = ref<Booking[]>([]); // Ref to store bookings

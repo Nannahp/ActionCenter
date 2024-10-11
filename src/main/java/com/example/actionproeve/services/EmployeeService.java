@@ -27,4 +27,8 @@ public class EmployeeService {
         return employeeRepository.findById(id); // Return the employee if found
     }
 
+    public Employee findByUsername(String username) {
+        return employeeRepository.findByUsername(username);
+    }
+
 }

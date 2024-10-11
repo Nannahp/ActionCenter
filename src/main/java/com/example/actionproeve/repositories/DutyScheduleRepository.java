@@ -11,6 +11,9 @@ import java.util.List;
 public interface DutyScheduleRepository extends JpaRepository<DutySchedule, Long> {
     List<DutySchedule> findByDate(LocalDate date);
 
+    List<DutySchedule> findByEmployee_Username(String username);
+
+
     //Can be used if we implement search after
     //List<DutySchedule> findByEmployeeId(Long employeeId);
     //List<DutySchedule> findByDate(String date);

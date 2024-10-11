@@ -1,6 +1,7 @@
 package com.example.actionproeve.controllers;
 
 import com.example.actionproeve.models.Booking;
+import com.example.actionproeve.models.BookingVue;
 import com.example.actionproeve.models.Employee;
 import com.example.actionproeve.services.BookingService;
 import com.example.actionproeve.services.EmployeeService;
@@ -29,7 +30,19 @@ public class BookingController {
     }
 
     @PostMapping("/createBooking")
-    public Booking createBooking(@RequestBody Booking booking) {
+    public Booking createBooking(@RequestBody BookingVue bookingVue) {
+        // Convert BookingDTO to Booking entity
+        Booking booking = new Booking();
+        booking.setActivityName(bookingVue.getActivityName());
+        booking.setCustomerName(bookingVue.getCustomerName());
+        booking.setEmail(bookingVue.getEmail());
+        booking.setDate(bookingVue.getDate());
+        booking.setStartTime(bookingVue.getStartTime());
+        booking.setEndTime(bookingVue.getEndTime());
+        // Fetch employee by ID and set it
+        Employee employee = employeeService.findById(bookingVue.getEmployee())
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+        booking.setEmployee(employee);
         return bookingService.createBooking(booking);
     }
 

@@ -1,39 +1,11 @@
 package com.example.actionproeve.models;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class BookingVue {
 
-@Entity
-public class Booking {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String activityName;
-    private String customerName;
-    private String email;
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    @JsonIgnore
-    private Employee employee; // Change to Employee type
-
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getActivityName() {
         return activityName;
@@ -43,6 +15,8 @@ public class Booking {
         this.activityName = activityName;
     }
 
+    private String customerName;
+
     public String getCustomerName() {
         return customerName;
     }
@@ -50,6 +24,8 @@ public class Booking {
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
+
+    private String email;
 
     public String getEmail() {
         return email;
@@ -59,13 +35,17 @@ public class Booking {
         this.email = email;
     }
 
-    public Employee getEmployee() {
+    private Long employee; // Employee ID
+
+    public Long getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee2) {
-        this.employee = employee2;
+    public void setEmployee(Long employee) {
+        this.employee = employee;
     }
+
+    private LocalDate date;
 
     public LocalDate getDate() {
         return date;
@@ -75,6 +55,8 @@ public class Booking {
         this.date = date;
     }
 
+    private LocalTime startTime;
+
     public LocalTime getStartTime() {
         return startTime;
     }
@@ -83,11 +65,24 @@ public class Booking {
         this.startTime = startTime;
     }
 
+    private LocalTime endTime;
+
     public LocalTime getEndTime() {
         return endTime;
     }
 
     public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public BookingVue(String activityName, String customerName, String email, Long employee, LocalDate date,
+            LocalTime startTime, LocalTime endTime) {
+        this.activityName = activityName;
+        this.customerName = customerName;
+        this.email = email;
+        this.employee = employee;
+        this.date = date;
+        this.startTime = startTime;
         this.endTime = endTime;
     }
 }

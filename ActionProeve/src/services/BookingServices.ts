@@ -1,6 +1,6 @@
 // src/services/BookingService.ts
 import axios from 'axios';
-import type { Booking } from '../models/Booking';
+import type { Booking } from '../models/BookingVue';
 
 const API_URL = 'http://localhost:8080/api/bookings';
 
