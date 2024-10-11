@@ -28,9 +28,10 @@ const isAdmin = computed(() => {
 const emit = defineEmits(['close-day-view']);
 
 const activityColors: Record<string, string> = {
-  "Yoga": "rgba(255, 182, 193, 0.7)",
-  "Bowling": "rgba(173, 216, 230, 0.7)",
-  "Laser Tag": "rgba(144, 238, 144, 0.7)"
+  "Paintball": "rgba(255, 182, 193, 0.7)",
+  "Sumo Wrestling": "rgba(173, 216, 230, 0.7)",
+  "Sumo Football": "rgba(144, 238, 144, 0.7)",
+  "Go-kart": "rgba(255, 165, 0, 0.7)"
 };
 
 // Function to get activity color based on the booking's activity name
