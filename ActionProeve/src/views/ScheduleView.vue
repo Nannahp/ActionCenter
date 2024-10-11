@@ -54,8 +54,6 @@ onMounted(async () => {
 
     // Filter duties for the logged-in user
     const username = localStorage.getItem('username');
-    console.log('All Duties:', allDuties.value);
-    console.log('Username:', username);
     duties.value = allDuties.value.filter(duty => duty.employeeUsername === username);
   } catch (error) {
     console.error('Error fetching duty schedules:', error);
