@@ -23,12 +23,6 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v4
-        with:
-        path: ~/.m2/repository
-        key: maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: maven-${{ runner.os }}-
 
       - name: Run Maven Tests
         working-directory: ./
@@ -47,13 +41,6 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node    
 
       - name: Install Dependencies
         working-directory: ./ActionProeve
